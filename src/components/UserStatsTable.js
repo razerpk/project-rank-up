@@ -17,26 +17,15 @@ const UserStatsTable = ({ userStats }) => {
         </Table.Header>
 
         <Table.Body>
-          <Table.Row>
-            <Table.Cell>Agi</Table.Cell>
-            <Table.Cell>{userStats.agi}</Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell>Int</Table.Cell>
-            <Table.Cell>{userStats.int}</Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell>Str</Table.Cell>
-            <Table.Cell>{userStats.str}</Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell>Max stamina</Table.Cell>
-            <Table.Cell>{userStats.stamina}</Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell>xp</Table.Cell>
-            <Table.Cell>{userStats.xp}</Table.Cell>
-          </Table.Row>
+          {userStats.map(stat => {
+            return (
+              <Table.Row key={stat.attribute}>
+                <Table.Cell>{stat.attribute}</Table.Cell>
+                <Table.Cell>{stat.value}</Table.Cell>
+              </Table.Row>
+            )
+          })}
+
         </Table.Body>
       </Table>
     </div>

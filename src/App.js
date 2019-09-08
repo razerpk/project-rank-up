@@ -5,10 +5,20 @@ import UserStatsTable from './components/UserStatsTable'
 
 const App = () => {
 
-  const [userStats, setUserStats] = useState({ agi: 10, str: 10, int: 10, stamina: 100, xp: 0 })
+  const [userStats, setUserStats] = useState( [
+    { attribute: 'agi', value: 10 },
+    { attribute: 'str', value: 10 },
+    { attribute: 'int', value: 10 },
+    { attribute: 'maxStamina', value: 100 },
+    { attribute: 'xp', value: 0 }
+  ])
   const [resources, setRecourses] = useState({ gold: 215 })
-  const [buildingLevels, setBuildingLevels] = useState({ building1: 0, building2: 0, building3: 0, building4: 0 })
-
+  const [buildings, setBuildings] = useState([
+    { name: 'building1', level: 0 },
+    { name: 'building2', level: 0 },
+    { name: 'building3', level: 0 },
+    { name: 'building4', level: 0 }
+  ])
 
   const [isLoading, setIsLoading] = useState(false)
   const [seconds, setSeconds] = useState(0)
@@ -26,20 +36,10 @@ const App = () => {
     const gameData = JSON.parse(window.localStorage.getItem('gameData'))
     if (gameData !== null){
       setIsLoading(true)
-      setUserStats({
-        agi: gameData.agi,
-        str: gameData.str,
-        int: gameData.int,
-        stamina: gameData.stamina,
-        xp: gameData.xp,
-      })
-      setRecourses({ gold: gameData.gold })
-      setBuildingLevels({
-        building1: gameData.building1,
-        building2: gameData.building2,
-        building3: gameData.building3,
-        building4: gameData.building4
-      })
+
+      setUserStats(gameData.userStats)
+      setRecourses([{ gold: gameData.gold }])
+      setBuildings(gameData.buildingLevels)
       setIsLoading(false)
     }
   }, []) // eslint-disable-line
@@ -48,16 +48,9 @@ const App = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       window.localStorage.setItem('gameData', JSON.stringify({
-        agi: userStats.agi,
-        str: userStats.str,
-        int: userStats.int,
-        stamina: userStats.stamina,
-        xp: userStats.xp,
+        userStats,
         gold: resources.gold,
-        building1: buildingLevels.building1,
-        building2: buildingLevels.building2,
-        building3: buildingLevels.building3,
-        building4: buildingLevels.building4,
+        buildings
       }))
     }, 5 * 60 * 1000) // 5 min
     return () => clearInterval(interval)
@@ -72,16 +65,9 @@ const App = () => {
 
   const saveData = () => {
     window.localStorage.setItem('gameData', JSON.stringify({
-      agi: userStats.agi,
-      str: userStats.str,
-      int: userStats.int,
-      stamina: userStats.stamina,
-      xp: userStats.xp,
+      userStats,
       gold: resources.gold,
-      building1: buildingLevels.building1,
-      building2: buildingLevels.building2,
-      building3: buildingLevels.building3,
-      building4: buildingLevels.building4,
+      buildings
     }))
   }
 
@@ -107,10 +93,10 @@ const App = () => {
 
         <BuildingTable
           buildingCost={buildingCost}
-          buildingLevels={buildingLevels}
+          buildings={buildings}
           setRecourses={setRecourses}
           resources={resources}
-          setBuildingLevels={setBuildingLevels}
+          setBuildings={setBuildings}
         />
         <UserStatsTable
           userStats={userStats}
