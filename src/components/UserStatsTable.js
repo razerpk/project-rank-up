@@ -25,7 +25,6 @@ const UserStatsTable = ({ userStats }) => {
               </Table.Row>
             )
           })}
-
         </Table.Body>
       </Table>
     </div>

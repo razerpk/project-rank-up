@@ -1,14 +1,14 @@
 import React from 'react'
 import { Button, Table } from 'semantic-ui-react'
 
-const BuildingTable = ({ buildingCost, buildings, setRecourses, resources, setBuildings }) => {
+const BuildingTable = ({ buildingCost, buildings, setResourses, resources, setBuildings }) => {
 
   const event = null
 
   const handlePurchase = (e, cost, buildingName) => {
     e = e || window.event
     e.preventDefault()
-    setRecourses({ ...resources, gold: resources.gold - cost })
+    setResourses({ ...resources, gold: resources.gold - cost })
 
     switch(buildingName) {
     case 'building1': {

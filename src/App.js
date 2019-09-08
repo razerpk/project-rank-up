@@ -3,22 +3,30 @@ import { Container, Menu } from 'semantic-ui-react'
 import BuildingTable from './components/BuildingTable'
 import UserStatsTable from './components/UserStatsTable'
 
+const initializeUserStats =  [
+  { attribute: 'agi', value: 10 },
+  { attribute: 'str', value: 10 },
+  { attribute: 'int', value: 10 },
+  { attribute: 'maxStamina', value: 100 },
+  { attribute: 'xp', value: 0 }
+]
+
+const initializeResources = [
+  { gold: 215 }
+]
+
+const initializeBuildings = [
+  { name: 'building1', level: 0 },
+  { name: 'building2', level: 0 },
+  { name: 'building3', level: 0 },
+  { name: 'building4', level: 0 }
+]
+
 const App = () => {
 
-  const [userStats, setUserStats] = useState( [
-    { attribute: 'agi', value: 10 },
-    { attribute: 'str', value: 10 },
-    { attribute: 'int', value: 10 },
-    { attribute: 'maxStamina', value: 100 },
-    { attribute: 'xp', value: 0 }
-  ])
-  const [resources, setRecourses] = useState({ gold: 215 })
-  const [buildings, setBuildings] = useState([
-    { name: 'building1', level: 0 },
-    { name: 'building2', level: 0 },
-    { name: 'building3', level: 0 },
-    { name: 'building4', level: 0 }
-  ])
+  const [userStats, setUserStats] = useState(initializeUserStats)
+  const [resources, setResourses] = useState(initializeResources)
+  const [buildings, setBuildings] = useState(initializeBuildings)
 
   const [isLoading, setIsLoading] = useState(false)
   const [seconds, setSeconds] = useState(0)
@@ -38,7 +46,7 @@ const App = () => {
       setIsLoading(true)
 
       setUserStats(gameData.userStats)
-      setRecourses([{ gold: gameData.gold }])
+      setResourses(gameData.resources)
       setBuildings(gameData.buildingLevels)
       setIsLoading(false)
     }
@@ -49,7 +57,7 @@ const App = () => {
     const interval = setInterval(() => {
       window.localStorage.setItem('gameData', JSON.stringify({
         userStats,
-        gold: resources.gold,
+        resources,
         buildings
       }))
     }, 5 * 60 * 1000) // 5 min
@@ -66,7 +74,7 @@ const App = () => {
   const saveData = () => {
     window.localStorage.setItem('gameData', JSON.stringify({
       userStats,
-      gold: resources.gold,
+      resources,
       buildings
     }))
   }
@@ -94,7 +102,7 @@ const App = () => {
         <BuildingTable
           buildingCost={buildingCost}
           buildings={buildings}
-          setRecourses={setRecourses}
+          setResourses={setResourses}
           resources={resources}
           setBuildings={setBuildings}
         />
