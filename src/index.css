@@ -1,0 +1,14 @@
+
+
+/* Building table starts here*/ 
+
+.table-30-width {
+  width: 30%
+}
+
+/* Right header of building table */
+/* Makes the right column 30% width */
+.building-table-right-header {
+  width: 30%;
+}
+/* Building tables right cell column buttons*/
