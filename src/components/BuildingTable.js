@@ -8,35 +8,20 @@ const BuildingTable = ({ buildingCost, buildings, setResourses, resources, setBu
   const handlePurchase = (e, cost, buildingName) => {
     e = e || window.event
     e.preventDefault()
-    setResourses({ ...resources, gold: resources.gold - cost })
 
-    switch(buildingName) {
-    case 'building1': {
-      let updateBuilding = buildings.find(building => building.name === 'building1')
-      updateBuilding = { ...updateBuilding, level: updateBuilding.level+1 }
-      setBuildings(buildings.map(building => building.name === updateBuilding.name ? updateBuilding : building))
+
+    let updateResource = resources.find(resource => resource.type === 'gold')
+
+    if (updateResource.value < cost) {
+      console.log('not enough gold')
+      return
     }
-      break
-    case 'building2': {
-      let updateBuilding = buildings.find(building => building.name === 'building2')
-      updateBuilding = { ...updateBuilding, level: updateBuilding.level+1 }
-      setBuildings(buildings.map(building => building.name === updateBuilding.name ? updateBuilding : building))
-    }
-      break
-    case 'building3': {
-      let updateBuilding = buildings.find(building => building.name === 'building3')
-      updateBuilding = { ...updateBuilding, level: updateBuilding.level+1 }
-      setBuildings(buildings.map(building => building.name === updateBuilding.name ? updateBuilding : building))
-    }
-      break
-    case 'building4': {
-      let updateBuilding = buildings.find(building => building.name === 'building4')
-      updateBuilding = { ...updateBuilding, level: updateBuilding.level+1 }
-      setBuildings(buildings.map(building => building.name === updateBuilding.name ? updateBuilding : building))
-    }
-      break
-    default:
-    }
+    updateResource = { ...updateResource, value: updateResource.value - cost }
+    setResourses(resources.map(resource => resource.type === updateResource.type ? updateResource : resource))
+
+    let updateBuilding = buildings.find(building => building.name === buildingName)
+    updateBuilding = { ...updateBuilding, level: updateBuilding.level+1 }
+    setBuildings(buildings.map(building => building.name === updateBuilding.name ? updateBuilding : building))
   }
 
   return (

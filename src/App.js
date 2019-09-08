@@ -1,18 +1,22 @@
 import React, { useState, useEffect } from 'react'
-import { Container, Menu } from 'semantic-ui-react'
+import { Container, Menu, Segment } from 'semantic-ui-react'
 import BuildingTable from './components/BuildingTable'
 import UserStatsTable from './components/UserStatsTable'
 
+
+// move to init folder
 const initializeUserStats =  [
-  { attribute: 'agi', value: 10 },
-  { attribute: 'str', value: 10 },
-  { attribute: 'int', value: 10 },
+  { attribute: 'con', value: 1 },
+  { attribute: 'str', value: 1 },
+  { attribute: 'dex', value: 1 },
+  { attribute: 'int', value: 1 },
+  { attribute: 'wil', value: 1 },
   { attribute: 'maxStamina', value: 100 },
   { attribute: 'xp', value: 0 }
 ]
 
 const initializeResources = [
-  { gold: 215 }
+  { type: 'gold', value: 215 }
 ]
 
 const initializeBuildings = [
@@ -30,11 +34,14 @@ const App = () => {
 
   const [isLoading, setIsLoading] = useState(false)
   const [seconds, setSeconds] = useState(0)
+  const [currentStamina, setCurrentStamina] = useState(0)
 
   // Keep track of current sessions playtime
+  // Main game loop TODO
   useEffect(() => {
     const interval = setInterval(() => {
       setSeconds(seconds => seconds + 1)
+      setCurrentStamina(currentStamina => currentStamina + 1)
     }, 1000)
     return () => clearInterval(interval)
   }, [])
@@ -52,6 +59,7 @@ const App = () => {
     }
   }, []) // eslint-disable-line
 
+  /* Broken for now, enable later -> if saves and page is reloaded the page crashes
   // Save the game every 5 min
   useEffect(() => {
     const interval = setInterval(() => {
@@ -63,6 +71,7 @@ const App = () => {
     }, 5 * 60 * 1000) // 5 min
     return () => clearInterval(interval)
   }, []) // eslint-disable-line
+  */
 
   // 100 200 300 400 500 ...
   const buildingCost = (building) => {
@@ -93,27 +102,29 @@ const App = () => {
             name='save'
             onClick={() => saveData()}
           />
+          <Menu.Item>
+            playtime {seconds} s
+          </Menu.Item>
         </Menu>
 
-        <div>
-          {userStats.xp} xp, {resources.gold} gold
-        </div>
+        <Segment>
+          <div>
+            stamina {currentStamina} / {userStats.find(attr => attr.attribute === 'maxStamina').value} <br />
+            gold {resources.find( ({ type }) => type === 'gold').value} <br />
+            xp {userStats.find(attr => attr.attribute === 'xp').value}
+          </div>
 
-        <BuildingTable
-          buildingCost={buildingCost}
-          buildings={buildings}
-          setResourses={setResourses}
-          resources={resources}
-          setBuildings={setBuildings}
-        />
-        <UserStatsTable
-          userStats={userStats}
-        />
-
-        <div>
-          {seconds} seconds played
-        </div>
-
+          <BuildingTable
+            buildingCost={buildingCost}
+            buildings={buildings}
+            setResourses={setResourses}
+            resources={resources}
+            setBuildings={setBuildings}
+          />
+          <UserStatsTable
+            userStats={userStats}
+          />
+        </Segment>
       </Container>
     </div>
   )
