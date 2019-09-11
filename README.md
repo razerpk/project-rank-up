@@ -1,58 +1,28 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## TODO
+  
+- check stamina when going to mission 
+- Make mission table  
+- gain xp from mission, gain resources from mission  
+- show levels based on xp  
+- move save button to top right  
+- implement passive income from buildings  
+- gain attributes from levels  
+- Initialize power rank
+- Stamina regen variable  
 
-## Available Scripts
 
-In the project directory, you can run:
+Goal:
+Start as normal citizen, try to get to S power rank / XX level.
+Level / Power rank aukaisee tehtäviä mistä saa enemmän xp,   
+aukaisee uusia "rakennuksia".  
 
-### `npm start`
+statit toimii kertoimina ja riippuen tehtävästä riippuu millainen kerroin  
+esim. jos alussa vaikka tehtävä "train" josta saa pelkkää xp ni str ja dex antaa   
+kertoimen miten paljon xp tehtävästä saa -> isompi lv sitä enempi exp saa mut staminaa menee aina saman verran  
+toine tehtävä taas vaikka joku "deliver other peoples stuff" jossa dexistä saa stamina usage bonuksen  
+vie 20 staminaa tehtävä mut staminasta saa bonuksen et vieki 20 staminaa / (1 + dex bonus)  
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+alkutehtävät: ?
+- train -> saa xp jolla saa level -> voi nostaa statteja  
+- help other people -> vähempi xp, saa coins -> coineilla rakennuksia  
+- rest at spa -> saa takas staminaa, maksaa coineja  

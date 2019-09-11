@@ -17,11 +17,12 @@ const UserStatsTable = ({ userStats }) => {
         </Table.Header>
 
         <Table.Body>
-          {userStats.map(stat => {
+          {/*stat[0] is key, stat[1] is value*/}
+          {Object.entries(userStats).map((stat) => {
             return (
-              <Table.Row key={stat.attribute}>
-                <Table.Cell>{stat.attribute}</Table.Cell>
-                <Table.Cell>{stat.value}</Table.Cell>
+              <Table.Row key={stat[0]}>
+                <Table.Cell>{stat[0]}</Table.Cell>
+                <Table.Cell>{stat[1]}</Table.Cell>
               </Table.Row>
             )
           })}

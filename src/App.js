@@ -1,50 +1,51 @@
 import React, { useState, useEffect } from 'react'
 import { Container, Menu, Segment } from 'semantic-ui-react'
+import useInterval from './hooks/useInterval'
 import BuildingTable from './components/BuildingTable'
 import UserStatsTable from './components/UserStatsTable'
 
 
-// move to init folder
-const initializeUserStats =  [
-  { attribute: 'con', value: 1 },
-  { attribute: 'str', value: 1 },
-  { attribute: 'dex', value: 1 },
-  { attribute: 'int', value: 1 },
-  { attribute: 'wil', value: 1 },
-  { attribute: 'maxStamina', value: 100 },
-  { attribute: 'xp', value: 0 }
-]
+// move to init folder all init objects
+const initialialUserStats =  {
+  con: 1,
+  str: 1,
+  dex: 1,
+  int: 1,
+  wil: 1,
+  stamina: 50,
+  maxStamina: 100,
+  xp: 0,
+}
 
-const initializeResources = [
-  { type: 'gold', value: 215 }
-]
+const initialialResources = {
+  gold: 215,
+}
 
-const initializeBuildings = [
-  { name: 'building1', level: 0 },
-  { name: 'building2', level: 0 },
-  { name: 'building3', level: 0 },
-  { name: 'building4', level: 0 }
-]
+const initialialBuildings = {
+  building1: { level: 0, costMulti: 1.15, lvUpMulti: 1.1 , produce: { gold: { baseValue: 1 } } },
+  building2: { level: 0 },
+  building3: { level: 0 },
+  building4: { level: 0 },
+}
 
 const App = () => {
 
-  const [userStats, setUserStats] = useState(initializeUserStats)
-  const [resources, setResourses] = useState(initializeResources)
-  const [buildings, setBuildings] = useState(initializeBuildings)
+  const [userStats, setUserStats] = useState(initialialUserStats)
+  const [resources, setResourses] = useState(initialialResources)
+  const [buildings, setBuildings] = useState(initialialBuildings)
 
   const [isLoading, setIsLoading] = useState(false)
   const [seconds, setSeconds] = useState(0)
-  const [currentStamina, setCurrentStamina] = useState(0)
 
-  // Keep track of current sessions playtime
-  // Main game loop TODO
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setSeconds(seconds => seconds + 1)
-      setCurrentStamina(currentStamina => currentStamina + 1)
-    }, 1000)
-    return () => clearInterval(interval)
-  }, [])
+  // Main game loop
+  useInterval(() => {
+    // Your custom logic here
+    setSeconds(seconds + 1)
+    if (userStats.stamina < userStats.maxStamina) {
+      setUserStats({ ...userStats, stamina: userStats.stamina + 1 })
+    }
+
+  }, 1000)
 
   // fetch saved gamedata on page load
   useEffect(() => {
@@ -73,13 +74,6 @@ const App = () => {
   }, []) // eslint-disable-line
   */
 
-  // 100 200 300 400 500 ...
-  const buildingCost = (building) => {
-    if (building === 0)
-      return 100
-    return (building * 100 + 100)
-  }
-
   const saveData = () => {
     window.localStorage.setItem('gameData', JSON.stringify({
       userStats,
@@ -96,7 +90,7 @@ const App = () => {
       <Container>
         <Menu inverted>
           <Menu.Item
-            name='The One'
+            name='Project Rank Up'
           />
           <Menu.Item className='menu-right'
             name='save'
@@ -109,13 +103,12 @@ const App = () => {
 
         <Segment>
           <div>
-            stamina {currentStamina} / {userStats.find(attr => attr.attribute === 'maxStamina').value} <br />
-            gold {resources.find( ({ type }) => type === 'gold').value} <br />
-            xp {userStats.find(attr => attr.attribute === 'xp').value}
+            stamina {userStats.stamina} / {userStats.maxStamina} <br />
+            gold {resources.gold} <br />
+            xp {userStats.xp}
           </div>
 
           <BuildingTable
-            buildingCost={buildingCost}
             buildings={buildings}
             setResourses={setResourses}
             resources={resources}

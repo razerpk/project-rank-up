@@ -1,27 +1,23 @@
 import React from 'react'
 import { Button, Table } from 'semantic-ui-react'
 
-const BuildingTable = ({ buildingCost, buildings, setResourses, resources, setBuildings }) => {
+const BuildingTable = ({ buildings, setResourses, resources, setBuildings }) => {
 
   const event = null
 
-  const handlePurchase = (e, cost, buildingName) => {
+  const handlePurchase = (e, cost, building) => {
     e = e || window.event
     e.preventDefault()
 
 
-    let updateResource = resources.find(resource => resource.type === 'gold')
-
-    if (updateResource.value < cost) {
+    if (resources.gold < cost) {
       console.log('not enough gold')
       return
     }
-    updateResource = { ...updateResource, value: updateResource.value - cost }
-    setResourses(resources.map(resource => resource.type === updateResource.type ? updateResource : resource))
-
-    let updateBuilding = buildings.find(building => building.name === buildingName)
-    updateBuilding = { ...updateBuilding, level: updateBuilding.level+1 }
-    setBuildings(buildings.map(building => building.name === updateBuilding.name ? updateBuilding : building))
+    
+    const updatedBuilding = { ...buildings[building],  level: buildings[building].level + 1 }
+    setBuildings({ ...buildings,  [building]: { ...updatedBuilding } })
+    setResourses({ ...resources, gold: resources.gold - cost })
   }
 
   return (
@@ -35,13 +31,13 @@ const BuildingTable = ({ buildingCost, buildings, setResourses, resources, setBu
         </Table.Header>
 
         <Table.Body>
-          {buildings.map(building => {
+          {Object.keys(buildings).map((building) => {
             return (
-              <Table.Row key={building.name}>
-                <Table.Cell>{building.name}</Table.Cell>
+              <Table.Row key={building}>
+                <Table.Cell>{building}</Table.Cell>
                 <Table.Cell>
-                  <Button positive onClick={() => handlePurchase(event, buildingCost(building.level), building.name)}>Buy</Button>
-                  <div>cost: {buildingCost(building.level)}</div>
+                  <Button positive onClick={() => handlePurchase(event, 100, building)}>Buy</Button>
+                  <div>cost: {/*TODO*/}</div>
                 </Table.Cell>
               </Table.Row>
             )
