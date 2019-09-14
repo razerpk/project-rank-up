@@ -3,6 +3,7 @@ import { Container, Menu, Segment } from 'semantic-ui-react'
 import useInterval from './hooks/useInterval'
 import BuildingTable from './components/BuildingTable'
 import UserStatsTable from './components/UserStatsTable'
+import Missions from './components/Missions'
 
 
 // move to init folder all init objects
@@ -28,11 +29,41 @@ const initialialBuildings = {
   building4: { level: 0 },
 }
 
+const initialMissions = {
+  mission1 : {
+    title: 'title',
+    desc: 'description',
+    lvReq: 0,
+    prReq: 0,
+    stamCost: 30,
+    reward: {
+      resources: {
+        gold: 50,
+      },
+      xp: 50,
+    }
+  },
+  mission2 : {
+    title: 'title2',
+    desc: 'description2',
+    lvReq: 0,
+    prReq: 0,
+    stamCost: 30,
+    reward: {
+      resources: {
+        gold: 10,
+      },
+      xp: 90,
+    }
+  },
+}
+
 const App = () => {
 
   const [userStats, setUserStats] = useState(initialialUserStats)
   const [resources, setResourses] = useState(initialialResources)
   const [buildings, setBuildings] = useState(initialialBuildings)
+  const [missions, setMissions] = useState(initialMissions)
 
   const [isLoading, setIsLoading] = useState(false)
   const [seconds, setSeconds] = useState(0)
@@ -56,6 +87,7 @@ const App = () => {
       setUserStats(gameData.userStats)
       setResourses(gameData.resources)
       setBuildings(gameData.buildingLevels)
+      setMissions(gameData.missions)
       setIsLoading(false)
     }
   }, []) // eslint-disable-line
@@ -88,6 +120,7 @@ const App = () => {
   return (
     <div>
       <Container>
+        {/* move menu to component */}
         <Menu inverted>
           <Menu.Item
             name='Project Rank Up'
@@ -102,6 +135,7 @@ const App = () => {
         </Menu>
 
         <Segment>
+          {/* move to useStatsTable with rest of the userstats? */}
           <div>
             stamina {userStats.stamina} / {userStats.maxStamina} <br />
             gold {resources.gold} <br />
@@ -116,6 +150,9 @@ const App = () => {
           />
           <UserStatsTable
             userStats={userStats}
+          />
+          <Missions
+            missions={missions}
           />
         </Segment>
       </Container>

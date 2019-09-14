@@ -14,7 +14,7 @@ const BuildingTable = ({ buildings, setResourses, resources, setBuildings }) => 
       console.log('not enough gold')
       return
     }
-    
+
     const updatedBuilding = { ...buildings[building],  level: buildings[building].level + 1 }
     setBuildings({ ...buildings,  [building]: { ...updatedBuilding } })
     setResourses({ ...resources, gold: resources.gold - cost })
@@ -31,12 +31,12 @@ const BuildingTable = ({ buildings, setResourses, resources, setBuildings }) => 
         </Table.Header>
 
         <Table.Body>
-          {Object.keys(buildings).map((building) => {
+          {Object.entries(buildings).map((building) => {
             return (
-              <Table.Row key={building}>
-                <Table.Cell>{building}</Table.Cell>
+              <Table.Row key={building[0]}>
+                <Table.Cell>{building[0]}</Table.Cell>
                 <Table.Cell>
-                  <Button positive onClick={() => handlePurchase(event, 100, building)}>Buy</Button>
+                  <Button positive onClick={() => handlePurchase(event, 100, building[0])}>Buy</Button>
                   <div>cost: {/*TODO*/}</div>
                 </Table.Cell>
               </Table.Row>
