@@ -14,7 +14,7 @@ const BuildingTable = ({ buildings, setResourses, resources, setBuildings }) => 
       console.log('not enough gold')
       return
     }
-    
+
     const updatedBuilding = { ...buildings[building],  level: buildings[building].level + 1 }
     setBuildings({ ...buildings,  [building]: { ...updatedBuilding } })
     setResourses({ ...resources, gold: resources.gold - cost })
