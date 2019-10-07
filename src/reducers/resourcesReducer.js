@@ -1,5 +1,5 @@
 const initialialResources = {
-  gold: 215,
+  gold: 10000,
 }
 
 
