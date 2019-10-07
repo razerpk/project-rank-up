@@ -1,8 +1,9 @@
 import React from 'react'
 import { Table } from 'semantic-ui-react'
+import { connect } from 'react-redux'
 
-const UserStatsTable = ({ userStats }) => {
-  if (!userStats){
+const UserStatsTable = (props) => {
+  if (!props.userStats){
     return null
   }
 
@@ -18,7 +19,7 @@ const UserStatsTable = ({ userStats }) => {
 
         <Table.Body>
           {/*stat[0] is key, stat[1] is value*/}
-          {Object.entries(userStats).map((stat) => {
+          {Object.entries(props.userStats).map((stat) => {
             return (
               <Table.Row key={stat[0]}>
                 <Table.Cell>{stat[0]}</Table.Cell>
@@ -32,4 +33,14 @@ const UserStatsTable = ({ userStats }) => {
   )
 }
 
-export default UserStatsTable
+const mapStateToProps = (state) => {
+  return {
+    userStats: state.userStats,
+  }
+}
+
+const ConnectedUserStatsTable = connect(
+  mapStateToProps,
+)(UserStatsTable)
+
+export default ConnectedUserStatsTable

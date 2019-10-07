@@ -1,8 +1,9 @@
 import React from 'react'
 import { Table } from 'semantic-ui-react'
+import { connect } from 'react-redux'
 
-const Missions = ({ missions }) => {
-  if (!missions){
+const Missions = (props) => {
+  if (!props.missions){
     return null
   }
 
@@ -18,11 +19,11 @@ const Missions = ({ missions }) => {
 
         <Table.Body>
           {/*stat[0] is key, stat[1] is value*/}
-          {Object.entries(missions).map((mission) => {
+          {Object.entries(props.missions).map((mission) => {
             return (
               <Table.Row key={mission[0]}>
                 <Table.Cell>{mission[0]}</Table.Cell>
-                <Table.Cell>{mission[1]} {mission[2]} {mission[3]}</Table.Cell>
+                <Table.Cell>{mission[1].stamCost}</Table.Cell>
               </Table.Row>
             )
           })}
@@ -32,4 +33,14 @@ const Missions = ({ missions }) => {
   )
 }
 
-export default Missions
+const mapStateToProps = (state) => {
+  return {
+    missions: state.missions,
+  }
+}
+
+const ConnectedMissions = connect(
+  mapStateToProps,
+)(Missions)
+
+export default ConnectedMissions
