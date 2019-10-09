@@ -6,19 +6,16 @@ import { updateResources } from '../reducers/resourcesReducer'
 
 const BuildingTable = (props) => {
 
-  console.log('buildings :', props.buildings);
   if (!props.buildings || !props.resources){
     return null
   }
-  const event = null
 
-  const handlePurchase = (e, buildingName) => {
-    e = e || window.event
-    e.preventDefault()
+  const handlePurchase = (buildingName) => {
 
     const building = { ...props.buildings[buildingName] }
-    // example cost: 100 * 1.15^10
-    const cost = Math.round(building.initCost * Math.pow(building.costMulti, building.level))
+    // example cost for level 10 building:
+    // 100 * 1.15^10
+    const cost = buildingCost(building)
     if (props.resources.gold < cost) {
       console.log('not enough gold')
       return
@@ -31,6 +28,19 @@ const BuildingTable = (props) => {
     props.updateResources({ ...props.resources, gold: props.resources.gold - cost })
   }
 
+  // params: building properties
+  // returns: current cost of the building
+  const buildingCost = (building) => {
+    return Math.round(building.initCost * Math.pow(building.costMulti, building.level))
+  }
+
+  //returns: green if can afford the building
+  //         red if cant afford the building
+  const buttonColor = (building) =>
+    buildingCost(building) < props.resources.gold
+      ? '#98FB98'
+      : '#CA3433'
+
   return (
     <div className='table-30-width'>
       <Table celled>
@@ -42,13 +52,15 @@ const BuildingTable = (props) => {
         </Table.Header>
 
         <Table.Body>
+          {/* building[0] is building name, building[1] contains one of the buildings properties*/}
           {Object.entries(props.buildings).map((building) => {
             return (
               <Table.Row key={building[0]}>
                 <Table.Cell>{building[0]}</Table.Cell>
                 <Table.Cell>
-                  <Button positive onClick={() => handlePurchase(event, building[0])}>Buy</Button>
-                  <div>cost: {Math.round(building[1].initCost * Math.pow(building[1].costMulti, building[1].level))}</div>
+                  <Button style={{ backgroundColor: buttonColor(building[1]) }}
+                    onClick={() => handlePurchase(building[0])}>Buy</Button>
+                  <div>cost: {buildingCost(building[1])}</div>
                 </Table.Cell>
               </Table.Row>
             )
