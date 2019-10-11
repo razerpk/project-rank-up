@@ -74,7 +74,7 @@ const App = (props) => {
           {/* move to useStatsTable with rest of the userstats? */}
           <div>
             stamina {props.userStats.stamina} / {props.userStats.maxStamina} <br />
-            gold {props.resources.gold} <br />
+            gold {props.resources.gold.curVal} <br />
             xp {props.userStats.xp}
           </div>
 

@@ -1,8 +1,8 @@
 import React from 'react'
 import { Button, Table } from 'semantic-ui-react'
 import { connect } from 'react-redux'
-import { updateBuildings } from '../reducers/buildingsReducer'
-import { updateResources } from '../reducers/resourcesReducer'
+import { updateBuildings, updateBuildingCosts } from '../reducers/buildingsReducer'
+import { updateResourceValue } from '../reducers/resourcesReducer'
 
 const BuildingTable = (props) => {
 
@@ -16,30 +16,52 @@ const BuildingTable = (props) => {
     // example cost for level 10 building:
     // 100 * 1.15^10
     const cost = buildingCost(building)
-    if (props.resources.gold < cost) {
+
+    if (props.resources.gold.curVal < cost.gold) {
       console.log('not enough gold')
       return
     }
 
-    const updatedBuilding = { ...building,  level: building.level + 1 }
-    const updatedBuildings = { ...props.buildings, [buildingName]: updatedBuilding }
-
-    props.updateBuildings(updatedBuildings)
-    props.updateResources({ ...props.resources, gold: props.resources.gold - cost })
+    const updatedBuilding = { ...building, level: building.level + 1 }
+    props.updateBuildingCosts(props.buildings, updatedBuilding, [buildingName], cost)
+    props.updateResourceValue(props.resources, cost)
   }
 
   // params: building properties
   // returns: current cost of the building
   const buildingCost = (building) => {
-    return Math.round(building.initCost * Math.pow(building.costMulti, building.level))
+    let cost = {}
+    for (let [key, value] of Object.entries(building.cost)) {
+      cost = {
+        ...cost,
+        [key]: Math.round(value * building.costMulti[key])
+      }
+    }
+    return cost
   }
 
+  const showCost = (building) => {
+    const cost = buildingCost(building)
+    return (
+      Object.entries(cost).map((resource) => {
+        return (
+          <div key={resource[0]}>
+            {resource[0]}: {resource[1]}
+          </div>
+        )
+      })
+    )
+  }
   //returns: green if can afford the building
   //         red if cant afford the building
-  const buttonColor = (building) =>
-    buildingCost(building) < props.resources.gold
-      ? '#98FB98'
-      : '#CA3433'
+  const buttonColor = (building) => {
+    for (let [key, value] of Object.entries(building.cost)) {
+      if (building.cost[key] < props.resources[key].curVal){
+        return '#98FB98'
+      }
+    }
+    return '#CA3433'
+  }
 
   return (
     <div className='table-30-width'>
@@ -60,7 +82,9 @@ const BuildingTable = (props) => {
                 <Table.Cell>
                   <Button style={{ backgroundColor: buttonColor(building[1]) }}
                     onClick={() => handlePurchase(building[0])}>Buy</Button>
-                  <div>cost: {buildingCost(building[1])}</div>
+                  <div>cost:
+                    {showCost(building[1])}
+                  </div>
                 </Table.Cell>
               </Table.Row>
             )
@@ -78,8 +102,9 @@ const mapStateToProps = (state) => {
   }
 }
 const mapDispatchToProps = {
-  updateResources,
-  updateBuildings
+  updateResourceValue,
+  updateBuildings,
+  updateBuildingCosts,
 }
 
 const ConnectedBuildingTable = connect(

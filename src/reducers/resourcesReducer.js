@@ -1,5 +1,5 @@
 const initialialResources = {
-  gold: 10000,
+  gold: { curVal: 10000, perTick: 0 },
 }
 
 
@@ -7,7 +7,7 @@ const reducer = (state = initialialResources, action) => {
   switch (action.type) {
   case 'INIT_RESOURCES':
     return action.data
-  case 'UPDATE_RESOURCES':
+  case 'UPDATE_RESOURCE_VALUES':
     return action.data
   default: return state
   }
@@ -22,11 +22,20 @@ export const initializeResources = () => {
   }
 }
 
-export const updateResources = (resources) => {
+export const updateResourceValue = (resources, cost) => {
+
+  let updatedResources
+  for (let [key, value] of Object.entries(resources)) {
+    updatedResources = {
+      ...resources,
+      [key]: { curVal: value.curVal - cost[key], ...[key] }
+    }
+  }
+
   return async dispatch => {
     dispatch({
-      type: 'UPDATE_RESOURCES',
-      data: resources
+      type: 'UPDATE_RESOURCE_VALUES',
+      data: updatedResources
     })
   }
 }
