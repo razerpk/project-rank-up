@@ -40,7 +40,6 @@ export const updateBuildingCosts = (buildings, building, buildingName, cost) => 
     }
     const updatedBuildings = { ...buildings, [buildingName]: updatedBuilding }
 
-    console.log('updatedBuildings :', updatedBuildings);
     dispatch({
       type: 'UPDATE_BUILDING_COSTS',
       data: updatedBuildings

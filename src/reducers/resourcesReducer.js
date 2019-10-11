@@ -26,9 +26,11 @@ export const updateResourceValue = (resources, cost) => {
 
   let updatedResources
   for (let [key, value] of Object.entries(resources)) {
+    console.log('value :', value);
+    console.log('[key] :', [key]);
     updatedResources = {
       ...resources,
-      [key]: { curVal: value.curVal - cost[key], ...[key] }
+      [key]: { ...value, curVal: value.curVal - cost[key] }
     }
   }
 

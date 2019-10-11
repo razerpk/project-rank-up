@@ -27,6 +27,7 @@ const BuildingTable = (props) => {
     props.updateResourceValue(props.resources, cost)
   }
 
+  console.log('props.resources :', props.resources);
   // params: building properties
   // returns: current cost of the building
   const buildingCost = (building) => {
