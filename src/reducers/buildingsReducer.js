@@ -28,17 +28,11 @@ export const initializeBuildings = () => {
 
 export const updateBuildingCosts = (buildings, building, buildingName, cost) => {
   return async dispatch => {
-    let updatedBuilding
     for (let [key, value] of Object.entries(cost)) {
-      updatedBuilding = {
-        ...building,
-        cost: {
-          ...cost,
-          [key]: Math.round(value * building.costMulti[key])
-        }
-      }
+      building.cost[key] = Math.round(value * building.costMulti[key])
     }
-    const updatedBuildings = { ...buildings, [buildingName]: updatedBuilding }
+
+    const updatedBuildings = { ...buildings, [buildingName]: building }
 
     dispatch({
       type: 'UPDATE_BUILDING_COSTS',
