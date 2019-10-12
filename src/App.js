@@ -6,10 +6,12 @@ import UserStatsTable from './components/UserStatsTable'
 import Missions from './components/Missions'
 import { connect } from 'react-redux'
 import { updateStats } from './reducers/userStatsReducer'
+import { updateResources } from './reducers/resourcesReducer'
 
 const App = (props) => {
 
   const [seconds, setSeconds] = useState(0)
+  const [interval, setInterval] = useState(0)
 
   // Main game loop
   useInterval(() => {
@@ -18,7 +20,8 @@ const App = (props) => {
     if (props.userStats.stamina < props.userStats.maxStamina) {
       props.updateStats({ ...props.userStats, stamina: props.userStats.stamina + 1 })
     }
-
+    props.updateResources()
+    setInterval(interval + 1)
   }, 1000)
 
   // fetch saved gamedata on page load
@@ -78,7 +81,7 @@ const App = (props) => {
             xp {props.userStats.xp}
           </div>
 
-          <BuildingTable/>
+          <BuildingTable interval={interval}/>
           <UserStatsTable/>
           <Missions/>
         </Segment>
@@ -96,5 +99,5 @@ const mapStateToProps = state => {
 }
 
 export default connect(
-  mapStateToProps, { updateStats }
+  mapStateToProps, { updateStats, updateResources }
 )(App)
