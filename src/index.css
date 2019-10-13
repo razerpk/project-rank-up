@@ -12,3 +12,36 @@
   width: 30%;
 }
 /* Building tables right cell column buttons*/
+
+.buildingNameDiv {
+  float:left;
+}
+
+.gain {
+  float:right;
+}
+
+/* Arrow for buildingTable */
+/* http://www.testmycss.com/tips-and-tricks/how-can-i-make-a-pointy-arrow-with-a-div-in-css/ */
+/*
+.arrow {
+  width:30;
+  float: right;
+}
+
+.line {
+  margin-top:3px;
+  width:20px;
+  background:rgb(43, 221, 43);
+  height:5px;
+  float:left;
+}
+.point {	
+  width: 0; 
+  height: 0; 
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 10px solid rgb(43, 221, 43);
+  float:right;
+}
+*/

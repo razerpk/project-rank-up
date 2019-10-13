@@ -1,6 +1,6 @@
 const initialialResources = {
   gold: { curVal: 10000, perTick: 0 },
-  silver: { curVal: 0, perTick: 0 },
+  silver: { curVal: 100, perTick: 0 },
 }
 
 const reducer = (state = initialialResources, action) => {
@@ -8,10 +8,18 @@ const reducer = (state = initialialResources, action) => {
   case 'INIT_RESOURCES':
     return action.data
   case 'UPDATE_RESOURCES':{
-    for (let key in state) {
-      state[key].curVal = Math.round((state[key].curVal + state[key].perTick) * 10) / 10
+    let updatedResources = state
+    for (let [key, value] of Object.entries(state)) {
+      updatedResources = {
+        ...updatedResources,
+        [key]: {
+          ...updatedResources[key],
+          curVal: Math.round((value.curVal + value.perTick) * 10) / 10,
+        }
+      }
     }
-    return state
+
+    return updatedResources
   }
   case 'UPDATE_RESOURCE_VALUES_AND_GAINS':
     return action.data
@@ -39,20 +47,34 @@ export const updateResources = () => {
 
 export const updateResourceValueAndPerTick = (resources, cost, buildingProduce) => {
 
+  let updatedResources = resources
+
   // Subtracts building cost from resources
   for (let [key, value] of Object.entries(cost)) {
-    resources[key].curVal = Math.round((resources[key].curVal - value) * 10) / 10
+    updatedResources = {
+      ...updatedResources,
+      [key]: {
+        ...updatedResources[key],
+        curVal: Math.round((updatedResources[key].curVal - value) * 10) / 10,
+      }
+    }
   }
 
   // Updates the perTick for given resources
   for (let [key, value] of Object.entries(buildingProduce)) {
-    resources[key].perTick = Math.round((resources[key].perTick + value.baseValue) * 10) / 10
+    updatedResources = {
+      ...updatedResources,
+      [key]: {
+        ...updatedResources[key],
+        perTick: Math.round((updatedResources[key].perTick + value.baseValue) * 10) / 10,
+      }
+    }
   }
 
   return async dispatch => {
     dispatch({
       type: 'UPDATE_RESOURCE_VALUES_AND_GAINS',
-      data: resources
+      data: updatedResources
     })
   }
 }

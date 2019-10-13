@@ -11,17 +11,15 @@ import { updateResources } from './reducers/resourcesReducer'
 const App = (props) => {
 
   const [seconds, setSeconds] = useState(0)
-  const [interval, setInterval] = useState(0)
 
   // Main game loop
   useInterval(() => {
-    // Your custom logic here
     setSeconds(seconds + 1)
+    // Your custom logic here
     if (props.userStats.stamina < props.userStats.maxStamina) {
       props.updateStats({ ...props.userStats, stamina: props.userStats.stamina + 1 })
     }
     props.updateResources()
-    setInterval(interval + 1)
   }, 1000)
 
   // fetch saved gamedata on page load
@@ -78,10 +76,13 @@ const App = (props) => {
           <div>
             stamina {props.userStats.stamina} / {props.userStats.maxStamina} <br />
             gold {props.resources.gold.curVal} <br />
-            xp {props.userStats.xp}
+            gold gain {props.resources.gold.perTick}<br />
+            silver {props.resources.silver.curVal} <br />
+            silver gain {props.resources.silver.perTick}<br />
+            xp {props.userStats.xp} <br />
           </div>
 
-          <BuildingTable interval={interval}/>
+          <BuildingTable seconds={seconds}/>
           <UserStatsTable/>
           <Missions/>
         </Segment>
@@ -94,7 +95,8 @@ const App = (props) => {
 const mapStateToProps = state => {
   return {
     userStats: state.userStats,
-    resources: state.resources
+    resources: state.resources,
+    buildings: state.buildings,
   }
 }
 

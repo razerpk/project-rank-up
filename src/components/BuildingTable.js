@@ -23,8 +23,8 @@ const BuildingTable = (props) => {
     }
 
     const updatedBuilding = { ...building, level: building.level + 1 }
-    props.updateBuildingCosts(props.buildings, updatedBuilding, [buildingName], cost)
     props.updateResourceValueAndPerTick(props.resources, cost, building.produce)
+    props.updateBuildingCosts(props.buildings, updatedBuilding, [buildingName], cost)
   }
 
   const showCost = (building) => {
@@ -43,11 +43,11 @@ const BuildingTable = (props) => {
   //         red if cant afford the building
   const buttonColor = (building) => {
     for (let [key] of Object.entries(building.cost)) {
-      if (building.cost[key] < props.resources[key].curVal){
-        return '#98FB98'
+      if (building.cost[key] > props.resources[key].curVal){
+        return '#CA3433' //red
       }
     }
-    return '#CA3433'
+    return '#98FB98' //green
   }
 
   /* building[0] is building name, building[1] contains one of the buildings properties*/
@@ -55,7 +55,17 @@ const BuildingTable = (props) => {
     Object.entries(props.buildings).map((building) => {
       return (
         <Table.Row key={building[0]}>
-          <Table.Cell>{building[0]}</Table.Cell>
+          <Table.Cell>
+            <div>{building[0]}</div>
+            <div className='buildingNameDiv'>
+              <div>{Math.round((building[1].produce.gold.baseValue * building[1].level)* 10) / 10} gold/s</div>
+              <div>level {building[1].level}</div>
+            </div>
+            <div className='gain'>
+              <div>{Math.round((building[1].produce.gold.baseValue * (building[1].level+1))* 10) / 10} gold/s</div>
+              <div>level {building[1].level + 1}</div>
+            </div>
+          </Table.Cell>
           <Table.Cell>
             <Button style={{ background: buttonColor(building[1]) }}
               onClick={() => handlePurchase(building[0])}>Buy</Button>
@@ -87,7 +97,7 @@ const BuildingTable = (props) => {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    interval: ownProps.interval,
+    seconds: ownProps.seconds,
     resources: state.resources,
     buildings: state.buildings,
   }
