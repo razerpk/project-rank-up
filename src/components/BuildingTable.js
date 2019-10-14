@@ -56,7 +56,7 @@ const BuildingTable = (props) => {
       return (
         <Table.Row key={building[0]}>
           <Table.Cell>
-            <div>{building[0]}</div>
+            <div><b>{building[0]}</b></div>
             <div className='buildingNameDiv'>
               <div>{Math.round((building[1].produce.gold.baseValue * building[1].level)* 10) / 10} gold/s</div>
               <div>level {building[1].level}</div>

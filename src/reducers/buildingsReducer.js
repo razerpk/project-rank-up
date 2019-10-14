@@ -1,11 +1,6 @@
-const initialialBuildings = {
-  'Mine': { level: 0, cost: { gold: 100, silver: 100 }, costMulti: { gold: 1.15, silver:1.1 }, lvUpMulti: 1.1 , produce: { gold: { baseValue: 0.1 }, silver: { baseValue: 0.2 } } },
-  'mid-level shop': { level: 0, cost: { gold: 200 }, costMulti: { gold: 1.15 }, lvUpMulti: 1.1 , produce: { gold: { baseValue: 0.1 } } },
-  'expensive': { level: 0, cost: { gold: 1000 }, costMulti: { gold: 1.10 }, lvUpMulti: 1.1 , produce: { gold: { baseValue: 0.1 } } },
-  'Spa Fountain': { level: 0, cost: { gold: 100 }, costMulti: { gold: 1.15 }, lvUpMulti: 1.1 , produce: { gold: { baseValue: 20 } } },
-}
+import initialBuildings from '../data/initialBuildings'
 
-const reducer = (state = initialialBuildings, action) => {
+const reducer = (state = initialBuildings, action) => {
   switch (action.type) {
   case 'INIT_BUILDINGS':
     return action.data
@@ -17,11 +12,11 @@ const reducer = (state = initialialBuildings, action) => {
   }
 }
 
-export const initializeBuildings = () => {
+export const initializeBuildings = (buildings) => {
   return async dispatch => {
     dispatch({
       type: 'INIT_BUILDINGS',
-      data: null // TODO
+      data: buildings // TODO
     })
   }
 }

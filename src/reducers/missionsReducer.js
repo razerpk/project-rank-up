@@ -1,31 +1,4 @@
-const initialMissions = {
-  mission1 : {
-    title: 'title',
-    desc: 'description',
-    lvReq: 0,
-    prReq: 0,
-    stamCost: 30,
-    reward: {
-      resources: {
-        gold: 50,
-      },
-      xp: 50,
-    }
-  },
-  mission2 : {
-    title: 'title2',
-    desc: 'description2',
-    lvReq: 0,
-    prReq: 0,
-    stamCost: 30,
-    reward: {
-      resources: {
-        gold: 10,
-      },
-      xp: 90,
-    }
-  },
-}
+import initialMissions from '../data/initialMissions'
 
 const reducer = (state = initialMissions, action) => {
   switch (action.type) {
@@ -37,11 +10,11 @@ const reducer = (state = initialMissions, action) => {
   }
 }
 
-export const initializeMissions = () => {
+export const initializeMissions = (missions) => {
   return async dispatch => {
     dispatch({
       type: 'INIT_MISSIONS',
-      data: null // TODO
+      data: missions // TODO
     })
   }
 }

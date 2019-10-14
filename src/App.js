@@ -1,12 +1,14 @@
 import React, { useState, /*useEffect*/ } from 'react'
-import { Container, Menu, Segment } from 'semantic-ui-react'
+import { Container, Segment } from 'semantic-ui-react'
 import useInterval from './hooks/useInterval'
+import TopMenu from './components/TopMenu'
 import BuildingTable from './components/BuildingTable'
 import UserStatsTable from './components/UserStatsTable'
 import Missions from './components/Missions'
 import { connect } from 'react-redux'
 import { updateStats } from './reducers/userStatsReducer'
 import { updateResources } from './reducers/resourcesReducer'
+import { initializeBuildings } from './reducers/buildingsReducer'
 
 const App = (props) => {
 
@@ -27,7 +29,10 @@ const App = (props) => {
     const gameData = JSON.parse(window.localStorage.getItem('gameData'))
     if (gameData !== null){
       setIsLoading(true)
-
+      props.initializeBuildings(gameData.buildings)
+      props.initializeResources(gameData.resources)
+      props.initializeUserStats(gameData.userStats)
+      props.initializeMissions(gameData.missions)
       setIsLoading(false)
     }
   }, []) // eslint-disable-line*/
@@ -36,6 +41,9 @@ const App = (props) => {
   // Save the game every 5 min
   useEffect(() => {
     const interval = setInterval(() => {
+      const resources = props.userStats
+      const userStats = props.resources
+      const buildings = props.buildings
       window.localStorage.setItem('gameData', JSON.stringify({
         userStats,
         resources,
@@ -47,10 +55,13 @@ const App = (props) => {
   */
 
   const saveData = () => {
+    const resources = props.userStats
+    const userStats = props.resources
+    const buildings = props.buildings
     window.localStorage.setItem('gameData', JSON.stringify({
-      ...props.userStats,
-      ...props.resources,
-      ...props.buildings
+      userStats,
+      resources,
+      buildings
     }))
   }
 
@@ -58,34 +69,27 @@ const App = (props) => {
     <div>
       <Container>
         {/* move menu to component */}
-        <Menu inverted>
-          <Menu.Item
-            name='Project Rank Up'
-          />
-          <Menu.Item className='menu-right'
-            name='save'
-            onClick={() => saveData()}
-          />
-          <Menu.Item>
-            playtime {seconds} s
-          </Menu.Item>
-        </Menu>
+        <TopMenu saveData={saveData} seconds={seconds} />
 
-        <Segment>
+        <Segment.Group horizontal>
           {/* move to useStatsTable with rest of the userstats? */}
-          <div>
-            stamina {props.userStats.stamina} / {props.userStats.maxStamina} <br />
-            gold {props.resources.gold.curVal} <br />
-            gold gain {props.resources.gold.perTick}<br />
-            silver {props.resources.silver.curVal} <br />
-            silver gain {props.resources.silver.perTick}<br />
-            xp {props.userStats.xp} <br />
-          </div>
+          <Segment>
+            <div>
+              stamina {props.userStats.stamina} / {props.userStats.maxStamina} <br />
+              gold {props.resources.gold.curVal} {props.resources.gold.perTick}/s<br />
+              silver {props.resources.silver.curVal} {props.resources.silver.perTick}/s<br />
+              xp {props.userStats.xp} <br />
+            </div>
+            <UserStatsTable/>
+          </Segment>
 
-          <BuildingTable seconds={seconds}/>
-          <UserStatsTable/>
-          <Missions/>
-        </Segment>
+          <Segment>
+            <BuildingTable seconds={seconds}/>
+          </Segment>
+          <Segment>
+            <Missions />
+          </Segment>
+        </Segment.Group>
       </Container>
     </div>
   )
@@ -101,5 +105,5 @@ const mapStateToProps = state => {
 }
 
 export default connect(
-  mapStateToProps, { updateStats, updateResources }
+  mapStateToProps, { updateStats, updateResources, initializeBuildings }
 )(App)

@@ -1,15 +1,6 @@
-const initialialUserStats =  {
-  con: 1,
-  str: 1,
-  dex: 1,
-  int: 1,
-  wil: 1,
-  stamina: 50,
-  maxStamina: 100,
-  xp: 0,
-}
+import initialUserStats from '../data/initialStats'
 
-const reducer = (state = initialialUserStats, action) => {
+const reducer = (state = initialUserStats, action) => {
   switch (action.type) {
   case 'INIT_USER_STATS':
     return action.data
@@ -19,11 +10,11 @@ const reducer = (state = initialialUserStats, action) => {
   }
 }
 
-export const initializeUserStats = () => {
+export const initializeUserStats = (userStats) => {
   return async dispatch => {
     dispatch({
       type: 'INIT_USER_STATS',
-      data: null // TODO
+      data: userStats // TODO
     })
   }
 }

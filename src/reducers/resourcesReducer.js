@@ -1,9 +1,6 @@
-const initialialResources = {
-  gold: { curVal: 10000, perTick: 0 },
-  silver: { curVal: 100, perTick: 0 },
-}
+import initialResources from '../data/initialResources'
 
-const reducer = (state = initialialResources, action) => {
+const reducer = (state = initialResources, action) => {
   switch (action.type) {
   case 'INIT_RESOURCES':
     return action.data
@@ -28,11 +25,11 @@ const reducer = (state = initialialResources, action) => {
 }
 
 
-export const initializeResources = () => {
+export const initializeResources = (resources) => {
   return async dispatch => {
     dispatch({
       type: 'INIT_RESOURCES',
-      data: null // TODO
+      data: resources // TODO
     })
   }
 }
