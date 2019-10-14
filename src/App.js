@@ -1,5 +1,5 @@
 import React, { useState, /*useEffect*/ } from 'react'
-import { Container, Segment } from 'semantic-ui-react'
+import { Container, Segment, Progress } from 'semantic-ui-react'
 import useInterval from './hooks/useInterval'
 import TopMenu from './components/TopMenu'
 import BuildingTable from './components/BuildingTable'
@@ -75,12 +75,13 @@ const App = (props) => {
           {/* move to useStatsTable with rest of the userstats? */}
           <Segment>
             <div>
-              <div className='ui active green progress' style={{ width: '100%' }}>
-                <div className='bar' style={{ width: `${props.userStats.stamina}%` }}>
-                  <div className='progress'>{`${props.userStats.stamina} / ${props.userStats.maxStamina}`}</div>
-                </div>
-                <div className='label'>Stamina</div>
-              </div>
+              <Progress
+                value={props.userStats.stamina}
+                total={props.userStats.maxStamina}
+                progress='ratio'
+                active
+                color='green'
+              />
               gold {props.resources.gold.curVal} {props.resources.gold.perTick}/s<br />
               silver {props.resources.silver.curVal} {props.resources.silver.perTick}/s<br />
               xp {props.userStats.xp} <br />
