@@ -81,6 +81,7 @@ const App = (props) => {
                 progress='ratio'
                 active
                 color='green'
+                label='Stamina'
               />
               gold {props.resources.gold.curVal} {props.resources.gold.perTick}/s<br />
               silver {props.resources.silver.curVal} {props.resources.silver.perTick}/s<br />
