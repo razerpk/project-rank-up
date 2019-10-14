@@ -75,7 +75,12 @@ const App = (props) => {
           {/* move to useStatsTable with rest of the userstats? */}
           <Segment>
             <div>
-              stamina {props.userStats.stamina} / {props.userStats.maxStamina} <br />
+              <div className='ui active green progress' style={{ width: '100%' }}>
+                <div className='bar' style={{ width: `${props.userStats.stamina}%` }}>
+                  <div className='progress'>{`${props.userStats.stamina} / ${props.userStats.maxStamina}`}</div>
+                </div>
+                <div className='label'>Stamina</div>
+              </div>
               gold {props.resources.gold.curVal} {props.resources.gold.perTick}/s<br />
               silver {props.resources.silver.curVal} {props.resources.silver.perTick}/s<br />
               xp {props.userStats.xp} <br />
