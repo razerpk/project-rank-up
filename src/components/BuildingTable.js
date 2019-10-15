@@ -55,7 +55,7 @@ const BuildingTable = (props) => {
     Object.entries(props.buildings).map((building) => {
       return (
         <Grid.Row key={building[0]}>
-          <Grid.Column width={9}>
+          <Grid.Column width={7}>
             <div><b>{building[0]}</b></div>
             <div className='buildingNameDiv'>
               <div>{Math.round((building[1].produce.gold.baseValue * building[1].level)* 10) / 10} gold/s</div>
@@ -66,7 +66,7 @@ const BuildingTable = (props) => {
               <div>level {building[1].level + 1}</div>
             </div>
           </Grid.Column>
-          <Grid.Column width={1}>
+          <Grid.Column width={5}>
             <Button style={{ background: buttonColor(building[1]) }}
               onClick={() => handlePurchase(building[0])}>Buy</Button>
             <div>cost:

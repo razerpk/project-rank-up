@@ -1,5 +1,5 @@
 import React, { useState, /*useEffect*/ } from 'react'
-import { Grid, Progress } from 'semantic-ui-react'
+import { Segment, Grid, Progress } from 'semantic-ui-react'
 import useInterval from './hooks/useInterval'
 import TopMenu from './components/TopMenu'
 import BuildingTable from './components/BuildingTable'
@@ -67,35 +67,37 @@ const App = (props) => {
 
   return (
     <div>
-      <TopMenu saveData={saveData} seconds={seconds} />
-      <Grid>
-        <Grid.Row colums={3}>
-          {/* move to useStatsTable with rest of the userstats? */}
-          <Grid.Column width={2}>
-            <div>
-              <Progress
-                value={props.userStats.stamina}
-                total={props.userStats.maxStamina}
-                progress='ratio'
-                active
-                color='green'
-                label='Stamina'
-              />
+      <Segment>
+        <TopMenu saveData={saveData} seconds={seconds} />
+        <Grid>
+          <Grid.Row colums={3}>
+            {/* move to useStatsTable with rest of the userstats? */}
+            <Grid.Column width={2}>
+              <div>
+                <Progress
+                  value={props.userStats.stamina}
+                  total={props.userStats.maxStamina}
+                  progress='ratio'
+                  active
+                  color='green'
+                  label='Stamina'
+                />
               gold {props.resources.gold.curVal} {props.resources.gold.perTick}/s<br />
               silver {props.resources.silver.curVal} {props.resources.silver.perTick}/s<br />
               xp {props.userStats.xp} <br />
-            </div>
-            <UserStatsTable/>
-          </Grid.Column>
+              </div>
+              <UserStatsTable/>
+            </Grid.Column>
 
-          <Grid.Column width={5}>
-            <BuildingTable seconds={seconds}/>
-          </Grid.Column>
-          <Grid.Column width={5}>
-            <Missions />
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
+            <Grid.Column width={5}>
+              <BuildingTable seconds={seconds}/>
+            </Grid.Column>
+            <Grid.Column width={5}>
+              <Missions />
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </Segment>
     </div>
   )
 }

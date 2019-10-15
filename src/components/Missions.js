@@ -10,7 +10,7 @@ const Missions = (props) => {
   return (
     <Grid celled>
       <Grid.Row>
-        <Grid.Column width={5}>
+        <Grid.Column width={6}>
           <Popup
             content='Number inside brackets is stamina cost'
             trigger={<b>Tasks</b>}
@@ -23,7 +23,7 @@ const Missions = (props) => {
       {Object.entries(props.missions).map((mission) => {
         return (
           <Grid.Row key={mission[0]}>
-            <Grid.Column width={5}>
+            <Grid.Column width={6}>
               <Popup
                 content={`MISSION INFO HERE ${mission[1].description}`}
                 trigger={<Button>{`${mission[0]} (${mission[1].stamCost})`}</Button>}
