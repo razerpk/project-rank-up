@@ -3,7 +3,7 @@ const initialBuildings = {
     level: 0,
     cost: {
       gold: 100,
-      silver: 100,
+      silver: 15,
     },
     costMulti: {
       gold: 1.15,
