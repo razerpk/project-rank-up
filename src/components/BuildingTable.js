@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Table } from 'semantic-ui-react'
+import { Grid, Button } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { updateBuildings, updateBuildingCosts } from '../reducers/buildingsReducer'
 import { updateResourceValueAndPerTick } from '../reducers/resourcesReducer'
@@ -54,8 +54,8 @@ const BuildingTable = (props) => {
   const buildingRows =
     Object.entries(props.buildings).map((building) => {
       return (
-        <Table.Row key={building[0]}>
-          <Table.Cell>
+        <Grid.Row key={building[0]}>
+          <Grid.Column width={9}>
             <div><b>{building[0]}</b></div>
             <div className='buildingNameDiv'>
               <div>{Math.round((building[1].produce.gold.baseValue * building[1].level)* 10) / 10} gold/s</div>
@@ -65,33 +65,26 @@ const BuildingTable = (props) => {
               <div>{Math.round((building[1].produce.gold.baseValue * (building[1].level+1))* 10) / 10} gold/s</div>
               <div>level {building[1].level + 1}</div>
             </div>
-          </Table.Cell>
-          <Table.Cell>
+          </Grid.Column>
+          <Grid.Column width={1}>
             <Button style={{ background: buttonColor(building[1]) }}
               onClick={() => handlePurchase(building[0])}>Buy</Button>
             <div>cost:
               {showCost(building[1])}
             </div>
-          </Table.Cell>
-        </Table.Row>
+          </Grid.Column>
+        </Grid.Row>
       )
     })
 
   return (
-    <div className='table-30-width'>
-      <Table celled>
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell>Buildings</Table.HeaderCell>
-            <Table.HeaderCell className='building-table-right-header'></Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
+    <Grid celled>
+      <Grid.Row>
+        <Grid.Column><b>Buildings</b></Grid.Column>
+      </Grid.Row>
 
-        <Table.Body>
-          {buildingRows}
-        </Table.Body>
-      </Table>
-    </div>
+      {buildingRows}
+    </Grid>
   )
 }
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Table } from 'semantic-ui-react'
+import { Grid, Button, Popup } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 const Missions = (props) => {
@@ -8,28 +8,34 @@ const Missions = (props) => {
   }
 
   return (
-    <div className='table-30-width'>
-      <Table celled>
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell>Available tasks</Table.HeaderCell>
-            <Table.HeaderCell className='mission'></Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
+    <Grid celled>
+      <Grid.Row>
+        <Grid.Column width={5}>
+          <Popup
+            content='Number inside brackets is stamina cost'
+            trigger={<b>Tasks</b>}
+          />
+        </Grid.Column>
+        <Grid.Column>Rewards</Grid.Column>
+      </Grid.Row>
 
-        <Table.Body>
-          {/*stat[0] is key, stat[1] is value*/}
-          {Object.entries(props.missions).map((mission) => {
-            return (
-              <Table.Row key={mission[0]}>
-                <Table.Cell>{mission[0]}</Table.Cell>
-                <Table.Cell>{mission[1].stamCost}</Table.Cell>
-              </Table.Row>
-            )
-          })}
-        </Table.Body>
-      </Table>
-    </div>
+      {/*stat[0] is key, stat[1] is value*/}
+      {Object.entries(props.missions).map((mission) => {
+        return (
+          <Grid.Row key={mission[0]}>
+            <Grid.Column width={5}>
+              <Popup
+                content={`MISSION INFO HERE ${mission[1].description}`}
+                trigger={<Button>{`${mission[0]} (${mission[1].stamCost})`}</Button>}
+              />
+            </Grid.Column>
+            <Grid.Column width={1}>
+              {mission[1].reward.resources.gold}g {mission[1].reward.xp}xp
+            </Grid.Column>
+          </Grid.Row>
+        )
+      })}
+    </Grid>
   )
 }
 

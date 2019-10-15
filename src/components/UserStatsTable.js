@@ -1,5 +1,5 @@
 import React from 'react'
-import { Table } from 'semantic-ui-react'
+import { Grid } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 const UserStatsTable = (props) => {
@@ -8,28 +8,22 @@ const UserStatsTable = (props) => {
   }
 
   return (
-    <div className='table-30-width'>
-      <Table celled>
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell>Stats</Table.HeaderCell>
-            <Table.HeaderCell className='building-table-right-header'></Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
+    <Grid celled>
+      <Grid.Row>
+        <Grid.Column><b>Stats</b></Grid.Column>
+      </Grid.Row>
 
-        <Table.Body>
-          {/*stat[0] is key, stat[1] is value*/}
-          {Object.entries(props.userStats).map((stat) => {
-            return (
-              <Table.Row key={stat[0]}>
-                <Table.Cell>{stat[0]}</Table.Cell>
-                <Table.Cell>{stat[1]}</Table.Cell>
-              </Table.Row>
-            )
-          })}
-        </Table.Body>
-      </Table>
-    </div>
+      {/*stat[0] is key, stat[1] is value*/}
+      {Object.entries(props.userStats).map((stat) => {
+        if(stat[0].length !== 3) return // quick fix to hide rest of user info
+        return (
+          <Grid.Row key={stat[0]}>
+            <Grid.Column width={7}>{stat[0]}</Grid.Column>
+            <Grid.Column width={1}>{stat[1]}</Grid.Column>
+          </Grid.Row>
+        )
+      })}
+    </Grid>
   )
 }
 

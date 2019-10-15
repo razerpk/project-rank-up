@@ -1,5 +1,5 @@
 import React, { useState, /*useEffect*/ } from 'react'
-import { Container, Segment, Progress } from 'semantic-ui-react'
+import { Grid, Progress } from 'semantic-ui-react'
 import useInterval from './hooks/useInterval'
 import TopMenu from './components/TopMenu'
 import BuildingTable from './components/BuildingTable'
@@ -67,13 +67,11 @@ const App = (props) => {
 
   return (
     <div>
-      <Container>
-        {/* move menu to component */}
-        <TopMenu saveData={saveData} seconds={seconds} />
-
-        <Segment.Group horizontal>
+      <TopMenu saveData={saveData} seconds={seconds} />
+      <Grid>
+        <Grid.Row colums={3}>
           {/* move to useStatsTable with rest of the userstats? */}
-          <Segment>
+          <Grid.Column width={2}>
             <div>
               <Progress
                 value={props.userStats.stamina}
@@ -88,16 +86,16 @@ const App = (props) => {
               xp {props.userStats.xp} <br />
             </div>
             <UserStatsTable/>
-          </Segment>
+          </Grid.Column>
 
-          <Segment>
+          <Grid.Column width={5}>
             <BuildingTable seconds={seconds}/>
-          </Segment>
-          <Segment>
+          </Grid.Column>
+          <Grid.Column width={5}>
             <Missions />
-          </Segment>
-        </Segment.Group>
-      </Container>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
     </div>
   )
 }
