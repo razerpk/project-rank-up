@@ -69,10 +69,10 @@ const App = (props) => {
     <div>
       <Segment>
         <TopMenu saveData={saveData} seconds={seconds} />
-        <Grid>
+        <Grid container textAlign='center'>
           <Grid.Row colums={3}>
             {/* move to useStatsTable with rest of the userstats? */}
-            <Grid.Column width={2}>
+            <Grid.Column mobile={7} tablet={4} computer={2}>
               <div>
                 <Progress
                   value={props.userStats.stamina}
@@ -89,10 +89,10 @@ const App = (props) => {
               <UserStatsTable/>
             </Grid.Column>
 
-            <Grid.Column width={5}>
+            <Grid.Column mobile={12} tablet={12} computer={5}>
               <BuildingTable seconds={seconds}/>
             </Grid.Column>
-            <Grid.Column width={5}>
+            <Grid.Column mobile={12} tablet={8} computer={6}>
               <Missions />
             </Grid.Column>
           </Grid.Row>

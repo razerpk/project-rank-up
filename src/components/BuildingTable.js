@@ -55,18 +55,18 @@ const BuildingTable = (props) => {
     Object.entries(props.buildings).map((building) => {
       return (
         <Grid.Row key={building[0]}>
-          <Grid.Column width={7}>
+          <Grid.Column mobile={8} tablet={6} computer={6}>
             <div><b>{building[0]}</b></div>
-            <div className='buildingNameDiv'>
+            <div >
               <div>{Math.round((building[1].produce.gold.baseValue * building[1].level)* 10) / 10} gold/s</div>
               <div>level {building[1].level}</div>
             </div>
-            <div className='gain'>
+            <div>
               <div>{Math.round((building[1].produce.gold.baseValue * (building[1].level+1))* 10) / 10} gold/s</div>
               <div>level {building[1].level + 1}</div>
             </div>
           </Grid.Column>
-          <Grid.Column width={5}>
+          <Grid.Column mobile={8} tablet={10} computer={10}>
             <Button style={{ background: buttonColor(building[1]) }}
               onClick={() => handlePurchase(building[0])}>Buy</Button>
             <div>cost:
