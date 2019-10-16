@@ -15,7 +15,7 @@ const UserStatsTable = (props) => {
 
       {/*stat[0] is key, stat[1] is value*/}
       {Object.entries(props.userStats).map((stat) => {
-        if(stat[0].length !== 3) return // quick fix to hide rest of user info
+        if(stat[0].length !== 3) return null// quick fix to hide rest of user info
         return (
           <Grid.Row key={stat[0]}>
             <Grid.Column mobile={8} tablet={8} computer={8}>{stat[0]}</Grid.Column>

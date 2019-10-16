@@ -4,12 +4,14 @@ const initialUserStats =  {
   dex: 1,
   int: 1,
   wil: 1,
-  stamina: 50,
+  stamina: 10,
   maxStamina: 100,
   level: 0,
   lvUpMulti: 1.1,
   xp: 0,
-  xpToLevel: 100,
+  get xpToLevel() {
+    return Math.round(100 * this.lvUpMulti ** this.level)
+  },
 }
 
 export default initialUserStats

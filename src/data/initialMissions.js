@@ -10,7 +10,7 @@ const initialMissions = {
       dexMulti: 1.1,
       intMulti: 1.1,
       wilMulti: 1.1,
-      xpMulti: () => {
+      get xpMulti() {
         return 1
       },
       resources: {
@@ -30,7 +30,7 @@ const initialMissions = {
       dexMulti: 1,
       intMulti: 1,
       wilMulti: 1,
-      xpMulti: () => {
+      get xpMulti() {
         return this.conMulti
       },
       resources: {
@@ -50,7 +50,7 @@ const initialMissions = {
       dexMulti: 1.05,
       intMulti: 1,
       wilMulti: 1.05,
-      xpMulti: () => {
+      get xpMulti() {
         return this.conMulti + this.strMulti + this.dexMulti
       },
       resources: {

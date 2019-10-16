@@ -7,6 +7,16 @@ const Missions = (props) => {
     return null
   }
 
+  const handleMissionClick = (missionName) => {
+    const mission = { ...props.missions[missionName] }
+    if (props.userStats.stamina < mission.stamCost) {
+      console.log(`not enough stamina, stamina: ${props.userStats.stamina}`)
+      return
+    }
+
+    //TODO update xp and resources
+  }
+
   return (
     <Grid celled>
       <Grid.Row>
@@ -26,7 +36,11 @@ const Missions = (props) => {
             <Grid.Column width={6}>
               <Popup
                 content={`MISSION INFO HERE ${mission[1].description}`}
-                trigger={<Button>{`${mission[0]} (${mission[1].stamCost})`}</Button>}
+                trigger={
+                  <Button onClick={() => handleMissionClick(mission[0])}>
+                    {`${mission[0]} (${mission[1].stamCost})`}
+                  </Button>
+                }
                 on='hover'
               />
             </Grid.Column>
@@ -43,6 +57,7 @@ const Missions = (props) => {
 const mapStateToProps = (state) => {
   return {
     missions: state.missions,
+    userStats: state.userStats,
   }
 }
 

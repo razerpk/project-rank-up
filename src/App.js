@@ -73,6 +73,7 @@ const App = (props) => {
           <TopMenu saveData={saveData} seconds={seconds} />
           <Grid container textAlign='left'>
             <Grid.Row columns='equal'>
+              {/**move to own separate component */}
               <Grid.Column mobile={12} tablet={12} computer={2}>
                 <Progress id='bar'
                   value={props.userStats.xp} //TODO wrong
@@ -104,7 +105,6 @@ const App = (props) => {
               </Grid.Column>
             </Grid.Row>
             <Grid.Row>
-              {/* move to useStatsTable with rest of the userstats? */}
               <Grid.Column mobile={7} tablet={4} computer={2}>
                 <UserStatsTable/>
               </Grid.Column>

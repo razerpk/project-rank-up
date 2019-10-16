@@ -64,7 +64,7 @@ const BuildingTable = (props) => {
   /* building[0] is building name, building[1] contains one of the buildings properties*/
   const buildingRows =
     Object.entries(props.buildings).map((building) => {
-      console.log('building[1] :', building[1].level);
+      console.log('building[1] :', building[1].level)
       return (
         <Grid.Row key={building[0]}>
           <Grid.Column mobile={8} tablet={6} computer={9}>

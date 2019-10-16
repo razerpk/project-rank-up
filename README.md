@@ -1,14 +1,18 @@
 ## TODO
   
-- check stamina when going to mission 
-- Make mission table  
+- check stamina when going to mission   
 - gain xp from mission, gain resources from mission  
 - show levels based on xp  
-- move save button to top right  
-- implement passive income from buildings  
-- gain attributes from levels  
-- Initialize power rank
-- Stamina regen variable  
+  
+- gain attribute points from levels and buttons to assign them    
+- set attribute point bonuses to missions (and buildings?)
+- add stat multiplier for mission stamina usage (eg. stamina / 1 + strMulti * user.str)     
+
+- tab layout to missions -> basic, F, E, D et..  
+
+- initialize perks  
+  
+- Initialize power rank  
 
 
 Goal:
@@ -25,4 +29,3 @@ vie 20 staminaa tehtävä mut staminasta saa bonuksen et vieki 20 staminaa / (1 
 alkutehtävät: ?
 - train -> saa xp jolla saa level -> voi nostaa statteja  
 - help other people -> vähempi xp, saa coins -> coineilla rakennuksia  
-- rest at spa -> saa takas staminaa, maksaa coineja  
