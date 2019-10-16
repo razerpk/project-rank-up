@@ -1,5 +1,5 @@
 import React, { useState, /*useEffect*/ } from 'react'
-import { Segment, Grid, Progress } from 'semantic-ui-react'
+import { Segment, Grid, Progress, Container } from 'semantic-ui-react'
 import useInterval from './hooks/useInterval'
 import TopMenu from './components/TopMenu'
 import BuildingTable from './components/BuildingTable'
@@ -67,13 +67,30 @@ const App = (props) => {
 
   return (
     <div>
-      <Segment>
-        <TopMenu saveData={saveData} seconds={seconds} />
-        <Grid container textAlign='center'>
-          <Grid.Row colums={3}>
-            {/* move to useStatsTable with rest of the userstats? */}
-            <Grid.Column mobile={7} tablet={4} computer={2}>
-              <div>
+      <Container>
+        <Segment>
+
+          <TopMenu saveData={saveData} seconds={seconds} />
+          <Grid container textAlign='left'>
+            <Grid.Row columns='equal'>
+              <Grid.Column mobile={12} tablet={12} computer={2}>
+                <Progress id='bar'
+                  value={props.userStats.xp} //TODO wrong
+                  total={props.userStats.xpToLevel}
+                  progress='ratio'
+                  color='purple'
+                  label='Xp'
+                />
+              </Grid.Column>
+              <Grid.Column mobile={12} tablet={12} computer={2}>
+                <div>gold {props.resources.gold.curVal}</div>
+                <div>{props.resources.gold.perTick}/s</div>
+              </Grid.Column>
+              <Grid.Column mobile={12} tablet={12} computer={2}>
+                <div>silver {props.resources.silver.curVal}</div>
+                <div>{props.resources.silver.perTick}/s</div>
+              </Grid.Column>
+              <Grid.Column mobile={12} tablet={12} computer={3}>
                 <Progress
                   value={props.userStats.stamina}
                   total={props.userStats.maxStamina}
@@ -82,22 +99,29 @@ const App = (props) => {
                   color='green'
                   label='Stamina'
                 />
-              gold {props.resources.gold.curVal} {props.resources.gold.perTick}/s<br />
-              silver {props.resources.silver.curVal} {props.resources.silver.perTick}/s<br />
-              xp {props.userStats.xp} <br />
-              </div>
-              <UserStatsTable/>
-            </Grid.Column>
+              </Grid.Column>
+              <Grid.Column mobile={12} tablet={12} computer={2}>
+              </Grid.Column>
+            </Grid.Row>
+            <Grid.Row>
+              {/* move to useStatsTable with rest of the userstats? */}
+              <Grid.Column mobile={7} tablet={4} computer={2}>
+                <UserStatsTable/>
+              </Grid.Column>
 
-            <Grid.Column mobile={12} tablet={12} computer={5}>
-              <BuildingTable seconds={seconds}/>
-            </Grid.Column>
-            <Grid.Column mobile={12} tablet={8} computer={6}>
-              <Missions />
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-      </Segment>
+              <Grid.Column mobile={12} tablet={12} computer={4}>
+                <BuildingTable/>
+              </Grid.Column>
+              <Grid.Column mobile={12} tablet={8} computer={8}>
+                <Missions />
+              </Grid.Column>
+              <Grid.Column mobile={12} tablet={8} computer={2}>
+                <UserStatsTable/>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </Segment>
+      </Container>
     </div>
   )
 }

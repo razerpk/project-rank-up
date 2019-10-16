@@ -27,6 +27,7 @@ const Missions = (props) => {
               <Popup
                 content={`MISSION INFO HERE ${mission[1].description}`}
                 trigger={<Button>{`${mission[0]} (${mission[1].stamCost})`}</Button>}
+                on='hover'
               />
             </Grid.Column>
             <Grid.Column width={1}>

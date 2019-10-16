@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Button } from 'semantic-ui-react'
+import { Grid, Button, Popup, Header } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { updateBuildings, updateBuildingCosts } from '../reducers/buildingsReducer'
 import { updateResourceValueAndPerTick } from '../reducers/resourcesReducer'
@@ -38,6 +38,17 @@ const BuildingTable = (props) => {
       })
     )
   }
+  const showProduce = (building, buildingLevel) => {
+    return (
+      Object.entries(building.produce).map((resource) => {
+        return (
+          <div key={resource[0]}>
+            {resource[0]}: {Math.round((resource[1].baseValue * (buildingLevel))* 10) / 10} /s
+          </div>
+        )
+      })
+    )
+  }
 
   //returns: green if can afford the building
   //         red if cant afford the building
@@ -53,24 +64,27 @@ const BuildingTable = (props) => {
   /* building[0] is building name, building[1] contains one of the buildings properties*/
   const buildingRows =
     Object.entries(props.buildings).map((building) => {
+      console.log('building[1] :', building[1].level);
       return (
         <Grid.Row key={building[0]}>
-          <Grid.Column mobile={8} tablet={6} computer={6}>
+          <Grid.Column mobile={8} tablet={6} computer={9}>
             <div><b>{building[0]}</b></div>
-            <div >
-              <div>{Math.round((building[1].produce.gold.baseValue * building[1].level)* 10) / 10} gold/s</div>
-              <div>level {building[1].level}</div>
-            </div>
-            <div>
-              <div>{Math.round((building[1].produce.gold.baseValue * (building[1].level+1))* 10) / 10} gold/s</div>
-              <div>level {building[1].level + 1}</div>
-            </div>
+            <hr></hr>
+            <div>{showProduce(building[1], building[1].level)}</div>
           </Grid.Column>
-          <Grid.Column mobile={8} tablet={10} computer={10}>
-            <Button style={{ background: buttonColor(building[1]) }}
-              onClick={() => handlePurchase(building[0])}>Buy</Button>
-            <div>cost:
-              {showCost(building[1])}
+
+          <Grid.Column mobile={8} tablet={10} computer={7}>
+            <Popup trigger={<Button style={{ background: buttonColor(building[1]) }}
+              onClick={() => handlePurchase(building[0])}>Buy</Button>} on='hover'>
+              <Header>{building[0]}</Header>
+              <p>{building[1].description}</p>
+              <div>Current level {building[1].level}<br></br>
+                next level production: {showProduce(building[1], building[1].level+1)}
+              </div>
+            </Popup>
+
+            <div>
+              {showCost(building[1], building[1].level)}
             </div>
           </Grid.Column>
         </Grid.Row>
@@ -88,9 +102,8 @@ const BuildingTable = (props) => {
   )
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
   return {
-    seconds: ownProps.seconds,
     resources: state.resources,
     buildings: state.buildings,
   }

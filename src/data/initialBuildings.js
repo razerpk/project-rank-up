@@ -1,9 +1,41 @@
 const initialBuildings = {
-  'Mine': {
+  'Sidekick': {
+    description: 'Hire others to do chores',
     level: 0,
     cost: {
       gold: 100,
-      silver: 15,
+    },
+    costMulti: {
+      gold: 1.15,
+    },
+    lvUpMulti: 1.1,
+    produce: {
+      gold: {
+        baseValue: 0.1,
+      },
+    },
+  },
+  'Silver mine': {
+    description: 'Buy part of the mine gaining continously silver',
+    level: 0,
+    cost: {
+      gold: 200,
+    }, costMulti: {
+      gold: 1.15,
+    },
+    lvUpMulti: 1.1,
+    produce: {
+      silver: {
+        baseValue: 0.1,
+      },
+    },
+  },
+  'Tavern': {
+    description: 'Place to buy some beer. Unlocks Perks',
+    level: 0,
+    cost: {
+      gold: 1000,
+      silver: 150,
     },
     costMulti: {
       gold: 1.15,
@@ -14,41 +46,9 @@ const initialBuildings = {
       gold: {
         baseValue: 0.1,
       },
-      silver: {
-        baseValue: 0.2,
-      },
     },
   },
-  'mid-level shop': {
-    level: 0,
-    cost: {
-      gold: 200,
-    }, costMulti: {
-      gold: 1.15,
-    },
-    lvUpMulti: 1.1,
-    produce: {
-      gold: {
-        baseValue: 0.1,
-      },
-    },
-  },
-  'expensive': {
-    level: 0,
-    cost: {
-      gold: 1000,
-    },
-    costMulti: {
-      gold: 1.10,
-    },
-    lvUpMulti: 1.1,
-    produce: {
-      gold: {
-        baseValue: 0.1,
-      },
-    },
-  },
-  'Spa Fountain': {
+  'debug': {
     level: 0,
     cost: {
       gold: 100,

@@ -1,4 +1,10 @@
 
+.ui.progress[data-percent="0"] .bar {
+  background:transparent;
+}
+.ui.progress[data-percent="0"] .bar .progress {
+  color: rgba(0, 0, 0, 0.87);
+}
 
 /* Building table starts here*/ 
 
