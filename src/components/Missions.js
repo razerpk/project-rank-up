@@ -1,6 +1,8 @@
 import React from 'react'
 import { Grid, Button, Popup } from 'semantic-ui-react'
 import { connect } from 'react-redux'
+import { updateStats } from '../reducers/userStatsReducer'
+import { updateResourcesWithMissionRewards } from '../reducers/resourcesReducer'
 
 const Missions = (props) => {
   if (!props.missions){
@@ -9,12 +11,19 @@ const Missions = (props) => {
 
   const handleMissionClick = (missionName) => {
     const mission = { ...props.missions[missionName] }
+
     if (props.userStats.stamina < mission.stamCost) {
       console.log(`not enough stamina, stamina: ${props.userStats.stamina}`)
       return
     }
 
-    //TODO update xp and resources
+    // basic functionality, needs to be modified to take modifiers into account
+    props.updateStats({
+      ...props.userStats,
+      stamina: props.userStats.stamina - mission.stamCost,
+      xp: props.userStats.xp + mission.reward.xp
+    })
+    props.updateResourcesWithMissionRewards(props.resources, mission.reward)
   }
 
   return (
@@ -56,13 +65,20 @@ const Missions = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    missions: state.missions,
     userStats: state.userStats,
+    missions: state.missions,
+    resources: state.resources,
   }
+}
+
+const mapDispatchToProps = {
+  updateStats,
+  updateResourcesWithMissionRewards,
 }
 
 const ConnectedMissions = connect(
   mapStateToProps,
+  mapDispatchToProps
 )(Missions)
 
 export default ConnectedMissions

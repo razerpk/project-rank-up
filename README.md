@@ -1,8 +1,8 @@
 ## TODO
-  
-- check stamina when going to mission   
-- gain xp from mission, gain resources from mission  
-- show levels based on xp  
+-- Continuous: refactoring old code to be in line with new,  
+removing unnecessary code    
+
+- show levels based on xp, handle xp when leveling up   
   
 - gain attribute points from levels and buttons to assign them    
 - set attribute point bonuses to missions (and buildings?)

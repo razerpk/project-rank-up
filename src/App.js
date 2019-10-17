@@ -76,11 +76,9 @@ const App = (props) => {
               {/**move to own separate component */}
               <Grid.Column mobile={12} tablet={12} computer={2}>
                 <Progress id='bar'
-                  value={props.userStats.xp} //TODO wrong
-                  total={props.userStats.xpToLevel}
-                  progress='ratio'
+                  percent={props.userStats.xp/props.userStats.xpToLevel*100}
                   color='purple'
-                  label='Xp'
+                  label={`Xp: ${props.userStats.xp}/${props.userStats.xpToLevel}`}
                 />
               </Grid.Column>
               <Grid.Column mobile={12} tablet={12} computer={2}>
@@ -93,12 +91,10 @@ const App = (props) => {
               </Grid.Column>
               <Grid.Column mobile={12} tablet={12} computer={3}>
                 <Progress
-                  value={props.userStats.stamina}
-                  total={props.userStats.maxStamina}
-                  progress='ratio'
+                  percent={props.userStats.stamina/props.userStats.maxStamina*100}
                   active
                   color='green'
-                  label='Stamina'
+                  label={`Stamina: ${props.userStats.stamina}/${props.userStats.maxStamina}`}
                 />
               </Grid.Column>
               <Grid.Column mobile={12} tablet={12} computer={2}>

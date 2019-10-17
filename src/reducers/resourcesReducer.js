@@ -20,6 +20,8 @@ const reducer = (state = initialResources, action) => {
   }
   case 'UPDATE_RESOURCE_VALUES_AND_GAINS':
     return action.data
+  case 'UPDATE_RESOURCES_FROM_MISSION':
+    return action.data
   default: return state
   }
 }
@@ -71,6 +73,27 @@ export const updateResourceValueAndPerTick = (resources, cost, buildingProduce) 
   return async dispatch => {
     dispatch({
       type: 'UPDATE_RESOURCE_VALUES_AND_GAINS',
+      data: updatedResources
+    })
+  }
+}
+
+export const updateResourcesWithMissionRewards = (resources, rewards) => {
+  return async dispatch => {
+    let updatedResources = resources
+
+    for (let [key, value] of Object.entries(rewards.resources)) {
+      updatedResources = {
+        ...updatedResources,
+        [key]: {
+          ...updatedResources[key],
+          curVal: updatedResources[key].curVal + value,
+        }
+      }
+    }
+
+    dispatch({
+      type: 'UPDATE_RESOURCES_FROM_MISSION',
       data: updatedResources
     })
   }
