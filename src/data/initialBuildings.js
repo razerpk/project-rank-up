@@ -1,5 +1,5 @@
 const initialBuildings = {
-  'Sidekick': {
+  'guild': {
     description: 'Hire others to do chores',
     level: 0,
     cost: {
@@ -31,7 +31,7 @@ const initialBuildings = {
     },
   },
   'Tavern': {
-    description: 'Place to buy some beer. Unlocks Perks',
+    description: 'Place to buy some elixirs. Unlocks Perks',
     level: 0,
     cost: {
       gold: 1000,
@@ -43,7 +43,7 @@ const initialBuildings = {
     },
     lvUpMulti: 1.1,
     produce: {
-      gold: {
+      elixir: {
         baseValue: 0.1,
       },
     },

@@ -6,7 +6,7 @@ import BuildingTable from './components/BuildingTable'
 import UserStatsTable from './components/UserStatsTable'
 import Missions from './components/Missions'
 import { connect } from 'react-redux'
-import { updateStats } from './reducers/userStatsReducer'
+import { updateStats, updateStamina } from './reducers/userStatsReducer'
 import { updateResources } from './reducers/resourcesReducer'
 import { initializeBuildings } from './reducers/buildingsReducer'
 
@@ -18,8 +18,8 @@ const App = (props) => {
   useInterval(() => {
     setSeconds(seconds + 1)
     // Your custom logic here
-    if (props.userStats.stamina < props.userStats.maxStamina) {
-      props.updateStats({ ...props.userStats, stamina: props.userStats.stamina + 1 })
+    if (props.userStats.stamina.value < props.userStats.stamina.max) {
+      props.updateStamina()
     }
     props.updateResources()
   }, 1000)
@@ -89,12 +89,16 @@ const App = (props) => {
                 <div>silver {props.resources.silver.curVal}</div>
                 <div>{props.resources.silver.perTick}/s</div>
               </Grid.Column>
+              <Grid.Column mobile={12} tablet={12} computer={2}>
+                <div>elixir {props.resources.elixir.curVal}</div>
+                <div>{props.resources.elixir.perTick}/s</div>
+              </Grid.Column>
               <Grid.Column mobile={12} tablet={12} computer={3}>
                 <Progress
-                  percent={props.userStats.stamina/props.userStats.maxStamina*100}
+                  percent={props.userStats.stamina.value/props.userStats.stamina.max*100}
                   active
                   color='green'
-                  label={`Stamina: ${props.userStats.stamina}/${props.userStats.maxStamina}`}
+                  label={`Stamina: ${props.userStats.stamina.value}/${props.userStats.stamina.max}`}
                 />
               </Grid.Column>
               <Grid.Column mobile={12} tablet={12} computer={2}>
@@ -132,5 +136,5 @@ const mapStateToProps = state => {
 }
 
 export default connect(
-  mapStateToProps, { updateStats, updateResources, initializeBuildings }
+  mapStateToProps, { updateStats, updateResources, initializeBuildings, updateStamina }
 )(App)

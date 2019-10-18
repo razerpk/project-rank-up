@@ -6,8 +6,11 @@ const reducer = (state = initialBuildings, action) => {
     return action.data
   case 'UPDATE_BUILDINGS':
     return action.data
-  case 'UPDATE_BUILDING_COSTS':
-    return action.data
+  case 'UPDATE_BUILDING_ON_PURCHASE':
+    return {
+      ...state,
+      [action.buildingName]: action.data
+    }
   default: return state
   }
 }
@@ -21,24 +24,32 @@ export const initializeBuildings = (buildings) => {
   }
 }
 
-export const updateBuildingCosts = (buildings, building, buildingName, cost) => {
-  return async dispatch => {
-    let updatedBuilding
+export const updateBuildingOnPurchase = (buildingName, cost) => {
+  return async (dispatch, getState) => {
+    let buildings = getState().buildings
+    let buildingToUpdate = { ...buildings[buildingName] }
+
+    buildingToUpdate = {
+      ...buildingToUpdate,
+      level: buildingToUpdate.level + 1
+    }
+
     for (let [key, value] of Object.entries(cost)) {
-      updatedBuilding = {
-        ...building,
+      buildingToUpdate = {
+        ...buildingToUpdate,
         cost: {
           ...cost,
-          [key]: Math.round(value * building.costMulti[key])
+          [key]: Math.round(value * buildingToUpdate.costMulti[key])
         }
       }
     }
 
-    const updatedBuildings = { ...buildings, [buildingName]: updatedBuilding }
+    //const updatedBuildings = { ...buildings, [buildingName]: updatedBuilding }
 
     dispatch({
-      type: 'UPDATE_BUILDING_COSTS',
-      data: updatedBuildings
+      type: 'UPDATE_BUILDING_ON_PURCHASE',
+      data: buildingToUpdate,
+      buildingName: buildingName
     })
   }
 }

@@ -15,10 +15,11 @@ const reducer = (state = initialResources, action) => {
         }
       }
     }
-
     return updatedResources
   }
-  case 'UPDATE_RESOURCE_VALUES_AND_TICKS':
+  case 'UPDATE_RESOURCE_VALUES':
+    return action.data
+  case 'UPDATE_RESOURCE_PERTICK':
     return action.data
   case 'UPDATE_RESOURCES_FROM_MISSION':
     return action.data
@@ -44,45 +45,11 @@ export const updateResources = () => {
   }
 }
 
-export const updateResourceValueAndPerTick = (resources, cost, buildingProduce) => {
-
-  let updatedResources = resources
-
-  // update resource values
-  for (let [key, value] of Object.entries(cost)) {
-    updatedResources = {
-      ...updatedResources,
-      [key]: {
-        ...updatedResources[key],
-        curVal: Math.round((updatedResources[key].curVal + value) * 10) / 10,
-      }
-    }
-  }
-
-  // Updates the perTick for given resources
-  for (let [key, value] of Object.entries(buildingProduce)) {
-    updatedResources = {
-      ...updatedResources,
-      [key]: {
-        ...updatedResources[key],
-        perTick: Math.round((updatedResources[key].perTick + value.baseValue) * 10) / 10,
-      }
-    }
-  }
-
-  return async dispatch => {
-    dispatch({
-      type: 'UPDATE_RESOURCE_VALUES_AND_TICKS',
-      data: updatedResources
-    })
-  }
-}
-
 export const updateResourceValues = (change, IncOrDesc) => {
   return async (dispatch, getState) => {
     let updatedResources = getState().resources
 
-    if (IncOrDesc == 'increment'){
+    if (IncOrDesc === 'increment'){
       for (let [key, value] of Object.entries(change)) {
         updatedResources = {
           ...updatedResources,
@@ -104,7 +71,7 @@ export const updateResourceValues = (change, IncOrDesc) => {
       }
     }
     dispatch({
-      type: 'UPDATE_RESOURCE_VALUES_AND_TICKS',
+      type: 'UPDATE_RESOURCE_VALUES',
       data: updatedResources,
     })
   }
@@ -124,7 +91,7 @@ export const updateResourcePerTick = (buildingProduce) => {
       }
     }
     dispatch({
-      type: 'UPDATE_RESOURCE_VALUES_AND_TICKS',
+      type: 'UPDATE_RESOURCE_PERTICK',
       data: updatedResources
     })
   }

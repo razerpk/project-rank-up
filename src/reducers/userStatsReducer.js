@@ -6,6 +6,11 @@ const reducer = (state = initialUserStats, action) => {
     return action.data
   case 'UPDATE_STATS':
     return action.data
+  case 'UPDATE_STAMINA':
+    return {
+      ...state,
+      stamina: action.data,
+    }
   default: return state
   }
 }
@@ -24,6 +29,22 @@ export const updateStats = (stats) => {
     dispatch({
       type: 'UPDATE_STATS',
       data: stats
+    })
+  }
+}
+
+export const updateStamina = () => {
+  return async (dispatch, getState) => {
+    let updatedStamina = getState().userStats.stamina
+
+    updatedStamina = {
+      ...updatedStamina,
+      value: updatedStamina.value + updatedStamina.perTick
+    }
+
+    dispatch({
+      type: 'UPDATE_STAMINA',
+      data: updatedStamina
     })
   }
 }

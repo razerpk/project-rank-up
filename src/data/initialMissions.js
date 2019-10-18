@@ -4,19 +4,20 @@ const initialMissions = {
     lvReq: 0,
     prReq: 0,
     stamCost: 0,
+    resourceMultipliers: {
+      con: 1.1,
+      str: 1.1,
+      dex: 1.1,
+      int: 1.1,
+      wil: 1.1,
+    },
     reward: {
-      conMulti: 1.1,
-      strMulti: 1.1,
-      dexMulti: 1.1,
-      intMulti: 1.1,
-      wilMulti: 1.1,
-      get xpMulti() {
-        return 1
-      },
       resources: {
         gold: 1,
       },
-      xp: 0,
+      xp: {
+        value: 5,
+      }
     }
   },
   'Help citizens': {
@@ -24,19 +25,20 @@ const initialMissions = {
     lvReq: 0,
     prReq: 0,
     stamCost: 25,
+    resourceMultipliers: {
+      con: 1.1,
+      str: 1.05,
+      dex: 1,
+      int: 1,
+      wil: 1,
+    },
     reward: {
-      conMulti: 1.1,
-      strMulti: 1.05,
-      dexMulti: 1,
-      intMulti: 1,
-      wilMulti: 1,
-      get xpMulti() {
-        return this.conMulti
-      },
       resources: {
         gold: 10,
       },
-      xp: 5,
+      xp: {
+        value: 5,
+      },
     }
   },
   'Exercise': {
@@ -44,19 +46,20 @@ const initialMissions = {
     lvReq: 0,
     prReq: 0,
     stamCost: 25,
+    resourceMultipliers: {
+      con: 1.05,
+      str: 1.05,
+      dex: 1.05,
+      int: 1,
+      wil: 1.05,
+    },
     reward: {
-      conMulti: 1.05,
-      strMulti: 1.05,
-      dexMulti: 1.05,
-      intMulti: 1,
-      wilMulti: 1.05,
-      get xpMulti() {
-        return this.conMulti + this.strMulti + this.dexMulti
-      },
       resources: {
         gold: 0,
       },
-      xp: 40,
+      xp: {
+        value: 40,
+      }
     }
   },
 }

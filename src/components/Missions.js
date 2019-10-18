@@ -12,16 +12,19 @@ const Missions = (props) => {
   const handleMissionClick = (missionName) => {
     const mission = { ...props.missions[missionName] }
 
-    if (props.userStats.stamina < mission.stamCost) {
-      console.log(`not enough stamina, stamina: ${props.userStats.stamina}`)
+    if (props.userStats.stamina.value < mission.stamCost) {
+      console.log(`not enough stamina, stamina: ${props.userStats.stamina.value}`)
       return
     }
 
     // loses getter function from original object
     let updatedStats = {
       ...props.userStats,
-      stamina: props.userStats.stamina - mission.stamCost,
-      xp: props.userStats.xp + mission.reward.xp,
+      stamina: {
+        ...props.userStats.stamina,
+        value: props.userStats.stamina.value - mission.stamCost,
+      },
+      xp: props.userStats.xp + mission.reward.xp.value,
     }
 
     // check if enough xp to level up
@@ -29,7 +32,7 @@ const Missions = (props) => {
       updatedStats = {
         ...updatedStats,
         level: updatedStats.level + 1,
-        unusedAttributePoins: updatedStats.unusedAttributePoins + 3,
+        unusedAttrPoins: updatedStats.unusedAttrPoins + 3,
         xp: updatedStats.xp - updatedStats.xpToLevel,
         get xpToLevel() {
           return Math.round(100 * this.lvUpMulti ** this.level)
@@ -69,7 +72,7 @@ const Missions = (props) => {
               />
             </Grid.Column>
             <Grid.Column width={1}>
-              {mission[1].reward.resources.gold}g {mission[1].reward.xp}xp
+              {mission[1].reward.resources.gold}g {mission[1].reward.xp.value}xp
             </Grid.Column>
           </Grid.Row>
         )
