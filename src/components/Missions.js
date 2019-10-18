@@ -17,12 +17,25 @@ const Missions = (props) => {
       return
     }
 
-    // basic functionality, needs to be modified to take modifiers into account
-    props.updateStats({
+    // loses getter function from original object
+    let updatedStats = {
       ...props.userStats,
       stamina: props.userStats.stamina - mission.stamCost,
-      xp: props.userStats.xp + mission.reward.xp
-    })
+      xp: props.userStats.xp + mission.reward.xp,
+    }
+
+    // check if enough xp to level up
+    if (updatedStats.xp >= updatedStats.xpToLevel) {
+      updatedStats = {
+        ...updatedStats,
+        level: updatedStats.level + 1,
+        unusedAttributePoins: updatedStats.unusedAttributePoins + 3,
+        xp: updatedStats.xp - updatedStats.xpToLevel,
+      }
+    }
+
+    // basic functionality, needs to be modified to take modifiers into account
+    props.updateStats(updatedStats)
     props.updateResourcesWithMissionRewards(props.resources, mission.reward)
   }
 
