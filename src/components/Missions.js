@@ -2,7 +2,7 @@ import React from 'react'
 import { Grid, Button, Popup } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { updateStats } from '../reducers/userStatsReducer'
-import { updateResourcesWithMissionRewards } from '../reducers/resourcesReducer'
+import { updateResourceValues } from '../reducers/resourcesReducer'
 
 const Missions = (props) => {
   if (!props.missions){
@@ -31,12 +31,14 @@ const Missions = (props) => {
         level: updatedStats.level + 1,
         unusedAttributePoins: updatedStats.unusedAttributePoins + 3,
         xp: updatedStats.xp - updatedStats.xpToLevel,
+        get xpToLevel() {
+          return Math.round(100 * this.lvUpMulti ** this.level)
+        },
       }
     }
-
     // basic functionality, needs to be modified to take modifiers into account
     props.updateStats(updatedStats)
-    props.updateResourcesWithMissionRewards(props.resources, mission.reward)
+    props.updateResourceValues(mission.reward.resources, 'increment')
   }
 
   return (
@@ -86,7 +88,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   updateStats,
-  updateResourcesWithMissionRewards,
+  updateResourceValues,
 }
 
 const ConnectedMissions = connect(

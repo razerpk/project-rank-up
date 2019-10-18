@@ -18,7 +18,7 @@ const reducer = (state = initialResources, action) => {
 
     return updatedResources
   }
-  case 'UPDATE_RESOURCE_VALUES_AND_GAINS':
+  case 'UPDATE_RESOURCE_VALUES_AND_TICKS':
     return action.data
   case 'UPDATE_RESOURCES_FROM_MISSION':
     return action.data
@@ -48,13 +48,13 @@ export const updateResourceValueAndPerTick = (resources, cost, buildingProduce) 
 
   let updatedResources = resources
 
-  // Subtracts building cost from resources
+  // update resource values
   for (let [key, value] of Object.entries(cost)) {
     updatedResources = {
       ...updatedResources,
       [key]: {
         ...updatedResources[key],
-        curVal: Math.round((updatedResources[key].curVal - value) * 10) / 10,
+        curVal: Math.round((updatedResources[key].curVal + value) * 10) / 10,
       }
     }
   }
@@ -72,28 +72,59 @@ export const updateResourceValueAndPerTick = (resources, cost, buildingProduce) 
 
   return async dispatch => {
     dispatch({
-      type: 'UPDATE_RESOURCE_VALUES_AND_GAINS',
+      type: 'UPDATE_RESOURCE_VALUES_AND_TICKS',
       data: updatedResources
     })
   }
 }
 
-export const updateResourcesWithMissionRewards = (resources, rewards) => {
-  return async dispatch => {
-    let updatedResources = resources
+export const updateResourceValues = (change, IncOrDesc) => {
+  return async (dispatch, getState) => {
+    let updatedResources = getState().resources
 
-    for (let [key, value] of Object.entries(rewards.resources)) {
+    if (IncOrDesc == 'increment'){
+      for (let [key, value] of Object.entries(change)) {
+        updatedResources = {
+          ...updatedResources,
+          [key]: {
+            ...updatedResources[key],
+            curVal: Math.round((updatedResources[key].curVal + value) * 10) / 10,
+          }
+        }
+      }
+    }else {
+      for (let [key, value] of Object.entries(change)) {
+        updatedResources = {
+          ...updatedResources,
+          [key]: {
+            ...updatedResources[key],
+            curVal: Math.round((updatedResources[key].curVal - value) * 10) / 10,
+          }
+        }
+      }
+    }
+    dispatch({
+      type: 'UPDATE_RESOURCE_VALUES_AND_TICKS',
+      data: updatedResources,
+    })
+  }
+}
+
+export const updateResourcePerTick = (buildingProduce) => {
+  return async (dispatch, getState) => {
+    let updatedResources  = getState().resources
+    // Updates the perTick for given resources
+    for (let [key, value] of Object.entries(buildingProduce)) {
       updatedResources = {
         ...updatedResources,
         [key]: {
           ...updatedResources[key],
-          curVal: updatedResources[key].curVal + value,
+          perTick: Math.round((updatedResources[key].perTick + value.baseValue) * 10) / 10,
         }
       }
     }
-
     dispatch({
-      type: 'UPDATE_RESOURCES_FROM_MISSION',
+      type: 'UPDATE_RESOURCE_VALUES_AND_TICKS',
       data: updatedResources
     })
   }

@@ -1,8 +1,8 @@
 import React from 'react'
 import { Grid, Button, Popup, Header } from 'semantic-ui-react'
 import { connect } from 'react-redux'
-import { updateBuildings, updateBuildingCosts } from '../reducers/buildingsReducer'
-import { updateResourceValueAndPerTick } from '../reducers/resourcesReducer'
+import { updateBuildingCosts } from '../reducers/buildingsReducer'
+import { updateResourceValues, updateResourcePerTick } from '../reducers/resourcesReducer'
 
 const BuildingTable = (props) => {
 
@@ -23,7 +23,8 @@ const BuildingTable = (props) => {
     }
 
     const updatedBuilding = { ...building, level: building.level + 1 }
-    props.updateResourceValueAndPerTick(props.resources, cost, building.produce)
+    props.updateResourceValues(cost)
+    props.updateResourcePerTick(building.produce)
     props.updateBuildingCosts(props.buildings, updatedBuilding, [buildingName], cost)
   }
 
@@ -64,7 +65,6 @@ const BuildingTable = (props) => {
   /* building[0] is building name, building[1] contains one of the buildings properties*/
   const buildingRows =
     Object.entries(props.buildings).map((building) => {
-      console.log('building[1] :', building[1].level)
       return (
         <Grid.Row key={building[0]}>
           <Grid.Column mobile={8} tablet={6} computer={9}>
@@ -109,8 +109,8 @@ const mapStateToProps = (state) => {
   }
 }
 const mapDispatchToProps = {
-  updateResourceValueAndPerTick,
-  updateBuildings,
+  updateResourceValues,
+  updateResourcePerTick,
   updateBuildingCosts,
 }
 
