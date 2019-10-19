@@ -6,6 +6,8 @@ const reducer = (state = initialUserStats, action) => {
     return action.data
   case 'UPDATE_STATS':
     return action.data
+  case 'ADD_STAT':
+    return action.data
   case 'UPDATE_STAMINA':
     return {
       ...state,
@@ -29,6 +31,23 @@ export const updateStats = (stats) => {
     dispatch({
       type: 'UPDATE_STATS',
       data: stats
+    })
+  }
+}
+
+export const addStat = (statName) => {
+  return async (dispatch, getState) => {
+    let userStats = getState().userStats
+
+    userStats = {
+      ...userStats,
+      [statName]: userStats[statName] + 1
+    }
+
+    console.log('userStats :', userStats);
+    dispatch({
+      type: 'ADD_STAT',
+      data: userStats
     })
   }
 }

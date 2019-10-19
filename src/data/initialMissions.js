@@ -13,7 +13,10 @@ const initialMissions = {
     },
     reward: {
       resources: {
-        gold: 1,
+        gold: {
+          baseValue: 1,
+          value: 1
+        }
       },
       xp: {
         value: 5,
@@ -34,7 +37,10 @@ const initialMissions = {
     },
     reward: {
       resources: {
-        gold: 10,
+        gold: {
+          baseValue: 10,
+          value: 10
+        }
       },
       xp: {
         value: 5,
@@ -55,7 +61,10 @@ const initialMissions = {
     },
     reward: {
       resources: {
-        gold: 0,
+        gold: {
+          baseValue: 0,
+          value: 0
+        }
       },
       xp: {
         value: 40,

@@ -72,7 +72,7 @@ const Missions = (props) => {
               />
             </Grid.Column>
             <Grid.Column width={1}>
-              {mission[1].reward.resources.gold}g {mission[1].reward.xp.value}xp
+              {mission[1].reward.resources.gold.value}g {mission[1].reward.xp.value}xp
             </Grid.Column>
           </Grid.Row>
         )

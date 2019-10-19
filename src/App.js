@@ -71,7 +71,7 @@ const App = (props) => {
         <Segment>
 
           <TopMenu saveData={saveData} seconds={seconds} />
-          <Grid container textAlign='left'>
+          <Grid container>
             <Grid.Row columns='equal'>
               {/**move to own separate component */}
               <Grid.Column mobile={12} tablet={12} computer={2}>
@@ -101,7 +101,7 @@ const App = (props) => {
                   label={`Stamina: ${props.userStats.stamina.value}/${props.userStats.stamina.max}`}
                 />
               </Grid.Column>
-              <Grid.Column mobile={12} tablet={12} computer={2}>
+              <Grid.Column mobile={12} tablet={12} computer={1}>
               </Grid.Column>
             </Grid.Row>
             <Grid.Row>
@@ -115,8 +115,7 @@ const App = (props) => {
               <Grid.Column mobile={12} tablet={8} computer={8}>
                 <Missions />
               </Grid.Column>
-              <Grid.Column mobile={12} tablet={8} computer={2}>
-                <UserStatsTable/>
+              <Grid.Column mobile={12} tablet={8} computer={1}>
               </Grid.Column>
             </Grid.Row>
           </Grid>

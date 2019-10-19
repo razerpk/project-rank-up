@@ -26,7 +26,7 @@ export const initializeBuildings = (buildings) => {
 
 export const updateBuildingOnPurchase = (buildingName, cost) => {
   return async (dispatch, getState) => {
-    let buildings = getState().buildings
+    const buildings = getState().buildings
     let buildingToUpdate = { ...buildings[buildingName] }
 
     buildingToUpdate = {

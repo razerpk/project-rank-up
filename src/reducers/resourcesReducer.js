@@ -55,7 +55,7 @@ export const updateResourceValues = (change, IncOrDesc) => {
           ...updatedResources,
           [key]: {
             ...updatedResources[key],
-            curVal: Math.round((updatedResources[key].curVal + value) * 10) / 10,
+            curVal: Math.round((updatedResources[key].curVal + value.value) * 10) / 10,
           }
         }
       }
