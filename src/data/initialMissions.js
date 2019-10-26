@@ -4,22 +4,21 @@ const initialMissions = {
     lvReq: 0,
     prReq: 0,
     stamCost: 0,
-    resourceMultipliers: {
+    rewardMultipliers: {
       con: 1.1,
       str: 1.1,
       dex: 1.1,
       int: 1.1,
       wil: 1.1,
     },
-    reward: {
-      resources: {
-        gold: {
-          baseValue: 1,
-          value: 1
-        }
+    rewards: {
+      gold: {
+        baseValue: 1,
+        value: 1
       },
       xp: {
-        value: 5,
+        baseValue: 0,
+        value: 0,
       }
     }
   },
@@ -28,21 +27,20 @@ const initialMissions = {
     lvReq: 0,
     prReq: 0,
     stamCost: 25,
-    resourceMultipliers: {
+    rewardMultipliers: {
       con: 1.1,
       str: 1.05,
       dex: 1,
       int: 1,
       wil: 1,
     },
-    reward: {
-      resources: {
-        gold: {
-          baseValue: 10,
-          value: 10
-        }
+    rewards: {
+      gold: {
+        baseValue: 10,
+        value: 10
       },
       xp: {
+        baseValue: 5,
         value: 5,
       },
     }
@@ -52,21 +50,20 @@ const initialMissions = {
     lvReq: 0,
     prReq: 0,
     stamCost: 25,
-    resourceMultipliers: {
+    rewardMultipliers: {
       con: 1.05,
       str: 1.05,
       dex: 1.05,
       int: 1,
       wil: 1.05,
     },
-    reward: {
-      resources: {
-        gold: {
-          baseValue: 0,
-          value: 0
-        }
+    rewards: {
+      gold: {
+        baseValue: 0,
+        value: 0
       },
       xp: {
+        baseValue: 40,
         value: 40,
       }
     }

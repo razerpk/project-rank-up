@@ -1,7 +1,7 @@
 import React from 'react'
 import { Grid, Button } from 'semantic-ui-react'
 import { connect } from 'react-redux'
-import { addStat } from '../reducers/userStatsReducer'
+import { spendUnusedAttributePoint } from '../reducers/userStatsReducer'
 import { updateMissionRewards } from '../reducers/missionsReducer'
 
 const UserStatsTable = (props) => {
@@ -11,15 +11,22 @@ const UserStatsTable = (props) => {
 
   const handleAttributeChange = (statName) => {
 
-    /*
     if (props.userStats.unusedAttrPoins === 0) {
       console.log('not enough unused attribute points')
       return
     }
-    */
-    props.addStat(statName)
+console.log('props. :', props.userStats.unusedAttrPoints);
+    props.spendUnusedAttributePoint(statName)
     props.updateMissionRewards(statName)
   }
+
+  const showAddStatBtn = () => {
+    if (props.userStats.unusedAttrPoints < 1) {
+      return 'none'
+    }
+    return 'inline-block'
+  }
+
 
   return (
     <Grid celled>
@@ -37,7 +44,12 @@ const UserStatsTable = (props) => {
             </Grid.Column>
             <Grid.Column mobile={8} tablet={8} computer={10}>
               {stat[1]}
-              <Button circular icon='plus' size='mini' onClick={() => handleAttributeChange(stat[0])}/>
+              <Button
+                style={{ display: showAddStatBtn() }}
+                circular icon='plus'
+                size='mini'
+                onClick={() => handleAttributeChange(stat[0])}
+              />
             </Grid.Column>
           </Grid.Row>
         )
@@ -53,7 +65,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-  addStat,
+  spendUnusedAttributePoint,
   updateMissionRewards,
 }
 const ConnectedUserStatsTable = connect(

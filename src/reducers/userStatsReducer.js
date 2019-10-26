@@ -4,9 +4,11 @@ const reducer = (state = initialUserStats, action) => {
   switch (action.type) {
   case 'INIT_USER_STATS':
     return action.data
-  case 'UPDATE_STATS':
+  case 'ADD_XP':
     return action.data
   case 'ADD_STAT':
+    return action.data
+  case 'SPEND_UNUSED_ATTRIBUTE_POINT':
     return action.data
   case 'UPDATE_STAMINA':
     return {
@@ -26,27 +28,67 @@ export const initializeUserStats = (userStats) => {
   }
 }
 
-export const updateStats = (stats) => {
-  return async dispatch => {
+export const missionXpAndStamina = (mission) => {
+  return async (dispatch, getState) => {
+
+    let stats = getState().userStats
+
+    stats = {
+      ...stats,
+      stamina: {
+        ...stats.stamina,
+        value: Math.round((stats.stamina.value - mission.stamCost) * 10) / 10,
+      },
+      xp: Math.round((stats.xp + mission.rewards.xp.value) * 10) / 10,
+    }
+
+    // increase level while enough xp
+    while (stats.xp >= stats.xpToLevel) {
+      stats = {
+        ...stats,
+        level: stats.level + 1,
+        unusedAttrPoints: stats.unusedAttrPoints + stats.attrPointsPerLevel,
+        xp: Math.round((stats.xp - stats.xpToLevel) * 10) / 10,
+        xpToLevel: Math.round(stats.xpToLevel * stats.lvUpMulti)
+      }
+    }
+
     dispatch({
-      type: 'UPDATE_STATS',
+      type: 'ADD_XP',
       data: stats
     })
   }
 }
 
-export const addStat = (statName) => {
+export const addStat = (statName, value=1) => {
   return async (dispatch, getState) => {
     let userStats = getState().userStats
 
     userStats = {
       ...userStats,
-      [statName]: userStats[statName] + 1
+      [statName]: userStats[statName] + value,
     }
 
-    console.log('userStats :', userStats);
     dispatch({
       type: 'ADD_STAT',
+      data: userStats
+    })
+  }
+}
+
+export const spendUnusedAttributePoint= (attribute) => {
+  return async (dispatch, getState) => {
+    let userStats = getState().userStats
+
+    console.log('attribute :', attribute);
+    userStats = {
+      ...userStats,
+      [attribute]: userStats[attribute] + 1,
+      unusedAttrPoints: userStats.unusedAttrPoints - 1,
+    }
+
+    dispatch({
+      type: 'SPEND_UNUSED_ATTRIBUTE_POINT',
       data: userStats
     })
   }
@@ -55,10 +97,11 @@ export const addStat = (statName) => {
 export const updateStamina = () => {
   return async (dispatch, getState) => {
     let updatedStamina = getState().userStats.stamina
+    const maxStamina = getState().userStats.stamina.max
 
     updatedStamina = {
       ...updatedStamina,
-      value: updatedStamina.value + updatedStamina.perTick
+      value: Math.min(maxStamina, updatedStamina.value + updatedStamina.perTick)
     }
 
     dispatch({

@@ -1,8 +1,8 @@
 import React from 'react'
 import { Grid, Button, Popup } from 'semantic-ui-react'
 import { connect } from 'react-redux'
-import { updateStats } from '../reducers/userStatsReducer'
-import { updateResourceValues } from '../reducers/resourcesReducer'
+import { missionXpAndStamina } from '../reducers/userStatsReducer'
+import { addResources } from '../reducers/resourcesReducer'
 
 const Missions = (props) => {
   if (!props.missions){
@@ -11,37 +11,15 @@ const Missions = (props) => {
 
   const handleMissionClick = (missionName) => {
     const mission = { ...props.missions[missionName] }
+    const { xp, ...resourceRewards } = mission.rewards
 
     if (props.userStats.stamina.value < mission.stamCost) {
       console.log(`not enough stamina, stamina: ${props.userStats.stamina.value}`)
       return
     }
 
-    // loses getter function from original object
-    let updatedStats = {
-      ...props.userStats,
-      stamina: {
-        ...props.userStats.stamina,
-        value: props.userStats.stamina.value - mission.stamCost,
-      },
-      xp: props.userStats.xp + mission.reward.xp.value,
-    }
-
-    // check if enough xp to level up
-    if (updatedStats.xp >= updatedStats.xpToLevel) {
-      updatedStats = {
-        ...updatedStats,
-        level: updatedStats.level + 1,
-        unusedAttrPoins: updatedStats.unusedAttrPoins + 3,
-        xp: updatedStats.xp - updatedStats.xpToLevel,
-        get xpToLevel() {
-          return Math.round(100 * this.lvUpMulti ** this.level)
-        },
-      }
-    }
-    // basic functionality, needs to be modified to take modifiers into account
-    props.updateStats(updatedStats)
-    props.updateResourceValues(mission.reward.resources, 'increment')
+    props.missionXpAndStamina(mission)
+    props.addResources(resourceRewards)
   }
 
   return (
@@ -72,7 +50,7 @@ const Missions = (props) => {
               />
             </Grid.Column>
             <Grid.Column width={1}>
-              {mission[1].reward.resources.gold.value}g {mission[1].reward.xp.value}xp
+              {mission[1].rewards.gold.value}g {mission[1].rewards.xp.value}xp
             </Grid.Column>
           </Grid.Row>
         )
@@ -90,8 +68,8 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-  updateStats,
-  updateResourceValues,
+  missionXpAndStamina,
+  addResources,
 }
 
 const ConnectedMissions = connect(

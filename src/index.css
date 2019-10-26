@@ -27,6 +27,10 @@
   float:left;
 }
 
+.ui.mini.button, .ui.mini.buttons .button, .ui.mini.buttons .or {
+  font-size: .5rem;
+}
+
 /* Arrow for buildingTable */
 /* http://www.testmycss.com/tips-and-tricks/how-can-i-make-a-pointy-arrow-with-a-div-in-css/ */
 /*

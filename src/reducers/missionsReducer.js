@@ -24,22 +24,23 @@ export const initializeMissions = (missions) => {
 export const updateMissionRewards = (statName) => {
   return async (dispatch, getState) => {
     let missions = getState().missions
+    const statValue = getState().userStats[statName]
 
-    for (let [key, value] of Object.entries(missions)) {
-      const statMulti = missions[key].resourceMultipliers[statName]
-      missions = {
-        ...missions,
-        [key]: {
-          ...missions[key],
-          reward: {
-            ...missions[key].reward,
-            resources: {
-              ...missions[key].reward.resources,
-              gold: {
-                ...missions[key].reward.resources.gold,
-                value: Math.round(missions[key].reward.resources.gold.value * statMulti * 10) /10
+    for (let [mission, missionFields] of Object.entries(missions)) {
+      const statMulti = missions[mission].rewardMultipliers[statName]
+
+      for (let [resource, resourceFields] of Object.entries(missionFields.rewards)) {
+        missions = {
+          ...missions,
+          [mission]: {
+            ...missions[mission],
+            rewards: {
+              ...missions[mission].rewards,
+              [resource]: {
+                ...resourceFields,
+                value: Math.round(resourceFields.baseValue * statMulti ** statValue * 10) /10
               }
-            },
+            }
           }
         }
       }

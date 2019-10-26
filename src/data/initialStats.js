@@ -11,12 +11,10 @@ const initialUserStats =  {
   },
   level: 0,
   lvUpMulti: 1.1,
-  unusedAttrPoins: 0,
+  unusedAttrPoints: 0,
   attrPointsPerLevel: 3,
   xp: 0,
-  get xpToLevel() {
-    return Math.round(100 * this.lvUpMulti ** this.level)
-  },
+  xpToLevel: 100
 }
 
 export default initialUserStats

@@ -4,7 +4,7 @@ const reducer = (state = initialResources, action) => {
   switch (action.type) {
   case 'INIT_RESOURCES':
     return action.data
-  case 'UPDATE_RESOURCES':{
+  case 'UPDATE_RESOURCES': {
     let updatedResources = state
     for (let [key, value] of Object.entries(state)) {
       updatedResources = {
@@ -17,7 +17,9 @@ const reducer = (state = initialResources, action) => {
     }
     return updatedResources
   }
-  case 'UPDATE_RESOURCE_VALUES':
+  case 'ADD_RESOURCES':
+    return action.data
+  case 'SUBTRACT_RESOURCES':
     return action.data
   case 'UPDATE_RESOURCE_PERTICK':
     return action.data
@@ -32,7 +34,7 @@ export const initializeResources = (resources) => {
   return async dispatch => {
     dispatch({
       type: 'INIT_RESOURCES',
-      data: resources // TODO
+      data: resources
     })
   }
 }
@@ -45,33 +47,43 @@ export const updateResources = () => {
   }
 }
 
-export const updateResourceValues = (change, IncOrDesc) => {
+export const addResources = (change) => {
   return async (dispatch, getState) => {
     let updatedResources = getState().resources
 
-    if (IncOrDesc === 'increment'){
-      for (let [key, value] of Object.entries(change)) {
-        updatedResources = {
-          ...updatedResources,
-          [key]: {
-            ...updatedResources[key],
-            curVal: Math.round((updatedResources[key].curVal + value.value) * 10) / 10,
-          }
-        }
-      }
-    }else {
-      for (let [key, value] of Object.entries(change)) {
-        updatedResources = {
-          ...updatedResources,
-          [key]: {
-            ...updatedResources[key],
-            curVal: Math.round((updatedResources[key].curVal - value) * 10) / 10,
-          }
+    for (let [key, value] of Object.entries(change)) {
+      updatedResources = {
+        ...updatedResources,
+        [key]: {
+          ...updatedResources[key],
+          curVal: Math.round((updatedResources[key].curVal + value.value) * 10) / 10,
         }
       }
     }
+
     dispatch({
-      type: 'UPDATE_RESOURCE_VALUES',
+      type: 'ADD_RESOURCES',
+      data: updatedResources,
+    })
+  }
+}
+
+export const subtractResources = (change) => {
+  return async (dispatch, getState) => {
+    let updatedResources = getState().resources
+
+    for (let [key, value] of Object.entries(change)) {
+      updatedResources = {
+        ...updatedResources,
+        [key]: {
+          ...updatedResources[key],
+          curVal: Math.round((updatedResources[key].curVal - value) * 10) / 10,
+        }
+      }
+    }
+
+    dispatch({
+      type: 'SUBTRACT_RESOURCES',
       data: updatedResources,
     })
   }

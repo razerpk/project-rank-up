@@ -6,7 +6,7 @@ import BuildingTable from './components/BuildingTable'
 import UserStatsTable from './components/UserStatsTable'
 import Missions from './components/Missions'
 import { connect } from 'react-redux'
-import { updateStats, updateStamina } from './reducers/userStatsReducer'
+import { updateStamina } from './reducers/userStatsReducer'
 import { updateResources } from './reducers/resourcesReducer'
 import { initializeBuildings } from './reducers/buildingsReducer'
 
@@ -72,8 +72,8 @@ const App = (props) => {
 
           <TopMenu saveData={saveData} seconds={seconds} />
           <Grid container>
+            {/**move to own separate component */}
             <Grid.Row columns='equal'>
-              {/**move to own separate component */}
               <Grid.Column mobile={12} tablet={12} computer={2}>
                 <Progress id='bar'
                   percent={props.userStats.xp/props.userStats.xpToLevel*100}
@@ -104,6 +104,7 @@ const App = (props) => {
               <Grid.Column mobile={12} tablet={12} computer={1}>
               </Grid.Column>
             </Grid.Row>
+            {/**<--END the move to own separate component */}
             <Grid.Row>
               <Grid.Column mobile={7} tablet={4} computer={2}>
                 <UserStatsTable/>
@@ -135,5 +136,5 @@ const mapStateToProps = state => {
 }
 
 export default connect(
-  mapStateToProps, { updateStats, updateResources, initializeBuildings, updateStamina }
+  mapStateToProps, { updateResources, initializeBuildings, updateStamina }
 )(App)

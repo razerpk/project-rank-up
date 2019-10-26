@@ -2,7 +2,7 @@ import React from 'react'
 import { Grid, Button, Popup, Header } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { updateBuildingOnPurchase } from '../reducers/buildingsReducer'
-import { updateResourceValues, updateResourcePerTick } from '../reducers/resourcesReducer'
+import { subtractResources, updateResourcePerTick } from '../reducers/resourcesReducer'
 
 const BuildingTable = (props) => {
 
@@ -22,7 +22,7 @@ const BuildingTable = (props) => {
       }
     }
 
-    props.updateResourceValues(cost)
+    props.subtractResources(cost)
     props.updateResourcePerTick(building.produce)
     props.updateBuildingOnPurchase([buildingName], cost)
   }
@@ -73,12 +73,19 @@ const BuildingTable = (props) => {
           </Grid.Column>
 
           <Grid.Column mobile={8} tablet={10} computer={7}>
+            {/* Popup contains all building info on hover */}
             <Popup trigger={<Button style={{ background: buttonColor(building[1]) }}
               onClick={() => handlePurchase(building[0])}>Buy</Button>} on='hover'>
-              <Header>{building[0]}</Header>
-              <p>{building[1].description}</p>
-              <div>Current level {building[1].level}<br></br>
-                next level production: {showProduce(building[1], building[1].level+1)}
+
+              <Header>
+                {building[0]}
+              </Header>
+              <p>
+                {building[1].description}
+              </p>
+              <div>
+                Current level {building[1].level}<br />
+                next level production: {showProduce(building[1], building[1].level + 1)}
               </div>
             </Popup>
 
@@ -108,7 +115,7 @@ const mapStateToProps = (state) => {
   }
 }
 const mapDispatchToProps = {
-  updateResourceValues,
+  subtractResources,
   updateResourcePerTick,
   updateBuildingOnPurchase,
 }
