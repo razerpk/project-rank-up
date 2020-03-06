@@ -1,0 +1,11 @@
+@import '../../index.scss';
+
+.resources-content {
+  display: flex;
+  flex-direction: row;
+  
+  .currency-item {
+    padding: 0 7px
+    
+  }
+}

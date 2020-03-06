@@ -80,7 +80,7 @@ export const spendUnusedAttributePoint= (attribute) => {
   return async (dispatch, getState) => {
     let userStats = getState().userStats
 
-    console.log('attribute :', attribute);
+    console.log('attribute :', attribute)
     userStats = {
       ...userStats,
       [attribute]: userStats[attribute] + 1,

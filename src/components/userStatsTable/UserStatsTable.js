@@ -1,8 +1,11 @@
 import React from 'react'
-import { Grid, Button } from 'semantic-ui-react'
+
 import { connect } from 'react-redux'
-import { spendUnusedAttributePoint } from '../reducers/userStatsReducer'
-import { updateMissionRewards } from '../reducers/missionsReducer'
+import { spendUnusedAttributePoint } from '../../reducers/userStatsReducer'
+import { updateMissionRewards } from '../../reducers/missionsReducer'
+import {
+  Button,
+} from '@material-ui/core'
 
 const UserStatsTable = (props) => {
   if (!props.userStats){
@@ -15,7 +18,7 @@ const UserStatsTable = (props) => {
       console.log('not enough unused attribute points')
       return
     }
-console.log('props. :', props.userStats.unusedAttrPoints);
+
     props.spendUnusedAttributePoint(statName)
     props.updateMissionRewards(statName)
   }
@@ -29,32 +32,32 @@ console.log('props. :', props.userStats.unusedAttrPoints);
 
 
   return (
-    <Grid celled>
-      <Grid.Row>
-        <Grid.Column><b>Stats</b></Grid.Column>
-      </Grid.Row>
+    <div>
+      <div className=''>
+        <div><b>Stats</b></div>
+      </div>
 
       {/*stat[0] is key, stat[1] is value*/}
       {Object.entries(props.userStats).map((stat) => {
         if(stat[0].length !== 3) return null// quick fix to hide rest of user info
         return (
-          <Grid.Row key={stat[0]}>
-            <Grid.Column mobile={8} tablet={8} computer={6}>
+          <div key={stat[0]}>
+            <div className=''>
               {stat[0]}
-            </Grid.Column>
-            <Grid.Column mobile={8} tablet={8} computer={10}>
+            </div>
+            <div className=''>
               {stat[1]}
               <Button
                 style={{ display: showAddStatBtn() }}
-                circular icon='plus'
-                size='mini'
                 onClick={() => handleAttributeChange(stat[0])}
-              />
-            </Grid.Column>
-          </Grid.Row>
+              >
+                +
+              </Button>
+            </div>
+          </div>
         )
       })}
-    </Grid>
+    </div>
   )
 }
 

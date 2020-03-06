@@ -1,14 +1,18 @@
 import React, { useState, /*useEffect*/ } from 'react'
-import { Segment, Grid, Progress, Container } from 'semantic-ui-react'
 import useInterval from './hooks/useInterval'
-import TopMenu from './components/TopMenu'
-import BuildingTable from './components/BuildingTable'
-import UserStatsTable from './components/UserStatsTable'
-import Missions from './components/Missions'
+import TopMenu from './components/topMenu/TopMenu'
+import BuildingTable from './components/buildingTable/BuildingTable'
+import UserStatsTable from './components/userStatsTable/UserStatsTable'
+import Missions from './components/missions/Missions'
 import { connect } from 'react-redux'
 import { updateStamina } from './reducers/userStatsReducer'
 import { updateResources } from './reducers/resourcesReducer'
 import { initializeBuildings } from './reducers/buildingsReducer'
+import {
+  Paper,
+  //Progress,
+} from '@material-ui/core'
+import './App.scss'
 
 const App = (props) => {
 
@@ -66,63 +70,27 @@ const App = (props) => {
   }
 
   return (
-    <div>
-      <Container>
-        <Segment>
-
+    <>
+      <div className='body'>
+        <Paper className='main-paper'>
           <TopMenu saveData={saveData} seconds={seconds} />
-          <Grid container>
-            {/**move to own separate component */}
-            <Grid.Row columns='equal'>
-              <Grid.Column mobile={12} tablet={12} computer={2}>
-                <Progress id='bar'
-                  percent={props.userStats.xp/props.userStats.xpToLevel*100}
-                  color='purple'
-                  label={`Xp: ${props.userStats.xp}/${props.userStats.xpToLevel}`}
-                />
-              </Grid.Column>
-              <Grid.Column mobile={12} tablet={12} computer={2}>
-                <div>gold {props.resources.gold.curVal}</div>
-                <div>{props.resources.gold.perTick}/s</div>
-              </Grid.Column>
-              <Grid.Column mobile={12} tablet={12} computer={2}>
-                <div>silver {props.resources.silver.curVal}</div>
-                <div>{props.resources.silver.perTick}/s</div>
-              </Grid.Column>
-              <Grid.Column mobile={12} tablet={12} computer={2}>
-                <div>elixir {props.resources.elixir.curVal}</div>
-                <div>{props.resources.elixir.perTick}/s</div>
-              </Grid.Column>
-              <Grid.Column mobile={12} tablet={12} computer={3}>
-                <Progress
-                  percent={props.userStats.stamina.value/props.userStats.stamina.max*100}
-                  active
-                  color='green'
-                  label={`Stamina: ${props.userStats.stamina.value}/${props.userStats.stamina.max}`}
-                />
-              </Grid.Column>
-              <Grid.Column mobile={12} tablet={12} computer={1}>
-              </Grid.Column>
-            </Grid.Row>
-            {/**<--END the move to own separate component */}
-            <Grid.Row>
-              <Grid.Column mobile={7} tablet={4} computer={2}>
-                <UserStatsTable/>
-              </Grid.Column>
 
-              <Grid.Column mobile={12} tablet={12} computer={4}>
-                <BuildingTable/>
-              </Grid.Column>
-              <Grid.Column mobile={12} tablet={8} computer={8}>
-                <Missions />
-              </Grid.Column>
-              <Grid.Column mobile={12} tablet={8} computer={1}>
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-        </Segment>
-      </Container>
-    </div>
+          <div className='main-view-row'>
+            <div className='main-view-item'>
+              <UserStatsTable />
+            </div>
+
+            <div className='main-view-item'>
+              <BuildingTable />
+            </div>
+            <div className='main-view-item'>
+              <Missions />
+            </div>
+          </div>
+
+        </Paper>
+      </div>
+    </>
   )
 }
 

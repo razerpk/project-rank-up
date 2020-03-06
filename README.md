@@ -1,6 +1,5 @@
 ## TODO
--- Continuous: refactoring old code to be in line with new,  
-removing unnecessary code    
+
 - update resource perticks based on building incomes,  
   sum all building incomes into one pertick  
 
@@ -16,6 +15,8 @@ removing unnecessary code
 - initialize perks  
   
 - Initialize power rank  
+
+- balancing overhaul  
 
 
 Goal:
