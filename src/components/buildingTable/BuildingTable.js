@@ -77,19 +77,25 @@ const BuildingTable = (props) => {
             </div>
             <div className=''>
               {/* Popup contains all building info on hover */}
-              {/*<Tooltip>
-                  <h2>
-                    {building[0]}
-                  </h2>
-                  <p>
-                    {building[1].description}
-                  </p>
-                  <div>
+            </div>
+            <Tooltip
+              title={<>
+                <h2>
+                  {building[0]}
+                </h2>
+                <p>
+                  {building[1].description}
+                </p>
+                <div>
                     Current level {building[1].level}<br />
                     next level production: {showProduce(building[1], building[1].level + 1)}
-                  </div>
-                </Tooltip>*/}
-            </div>
+                </div>
+              </>
+              }
+            >
+              <Button style={{ background: buttonColor(building[1]) }}
+                onClick={() => handlePurchase(building[0])}>Buy</Button>
+            </Tooltip>
 
             <div>
               {showCost(building[1], building[1].level)}

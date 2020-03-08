@@ -1,9 +1,11 @@
 const initialUserStats =  {
-  con: 1,
-  str: 1,
-  dex: 1,
-  int: 1,
-  wil: 1,
+  attributes: {
+    con: { value: 1, },
+    str: { value: 1, },
+    dex: { value: 1, },
+    int: { value: 1, },
+    wil: { value: 1, },
+  },
   stamina: {
     value: 100,
     max: 100,

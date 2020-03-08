@@ -1,9 +1,8 @@
 import React, { useState, /*useEffect*/ } from 'react'
 import useInterval from './hooks/useInterval'
 import TopMenu from './components/topMenu/TopMenu'
-import BuildingTable from './components/buildingTable/BuildingTable'
-import UserStatsTable from './components/userStatsTable/UserStatsTable'
-import Missions from './components/missions/Missions'
+import ContentTabs from './components/contentTabs/ContentTabs'
+import ResourcesList from './components/resourcesList/ResourcesList'
 import { connect } from 'react-redux'
 import { updateStamina } from './reducers/userStatsReducer'
 import { updateResources } from './reducers/resourcesReducer'
@@ -15,7 +14,6 @@ import {
 import './App.scss'
 
 const App = (props) => {
-
   const [seconds, setSeconds] = useState(0)
 
   // Main game loop
@@ -74,17 +72,15 @@ const App = (props) => {
       <div className='body'>
         <Paper className='main-paper'>
           <TopMenu saveData={saveData} seconds={seconds} />
-
           <div className='main-view-row'>
             <div className='main-view-item'>
-              <UserStatsTable />
+              <ResourcesList />
             </div>
 
             <div className='main-view-item'>
-              <BuildingTable />
-            </div>
-            <div className='main-view-item'>
-              <Missions />
+              <div className='main-view-item'>
+                <ContentTabs />
+              </div>
             </div>
           </div>
 

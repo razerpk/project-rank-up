@@ -1,5 +1,5 @@
 import React from 'react'
-import ResourcesList from '../resourcesList/ResourcesList'
+import UserStatsTable from './../userStatsTable/UserStatsTable'
 import {
   AppBar,
   Button,
@@ -24,7 +24,7 @@ const TopMenu = ({ saveData, seconds }) => {
           playtime {seconds} s
         </b>
       </Toolbar>
-      <ResourcesList />
+      <UserStatsTable />
     </AppBar>
   )
 }
