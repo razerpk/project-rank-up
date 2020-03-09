@@ -1,12 +1,13 @@
 import { createMuiTheme } from '@material-ui/core/styles';
-import indigo from '@material-ui/core/colors/indigo';
-import pink from '@material-ui/core/colors/pink';
+import purple from '@material-ui/core/colors/purple';
 import red from '@material-ui/core/colors/red';
 
 const theme = createMuiTheme({
   palette: {
-    primary: indigo,
-    secondary: pink,
+    pprimary: purple,
+    secondary: {
+      main: '#26c6da',
+    },
     error: red,
     // Used by `getContrastText()` to maximize the contrast between the background and
     // the text.

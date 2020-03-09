@@ -14,26 +14,23 @@ const TopMenu = ({ saveData, seconds, userStats }) => {
         <b>playtime {seconds} s</b>
       </Toolbar>
       <UserStatsTable />
-      <div className='stamina-bar'>
-        {
-          <LinearProgress
-            id='bar'
-            variant='determinate'
-            color='secondary'
-            value={(userStats.xp / userStats.xpToLevel) * 100}
-            label={`Xp: ${userStats.xp}/${userStats.xpToLevel}`}
-          />
-        }
+      <div className='xp-div'>
+        <LinearProgress
+          className='xp-bar'
+          variant='determinate'
+          color='secondary'
+          value={(userStats.xp / userStats.xpToLevel) * 100}
+        />
+        <label className='xp-text'>{`${userStats.xp}/${userStats.xpToLevel}`}</label>
       </div>
-      <div className='xp-bar'>
-        {
-          <LinearProgress
-            variant='determinate'
-            color='primary'
-            value={(userStats.stamina.value / userStats.stamina.max) * 100}
-            label={`Stamina: ${userStats.stamina.value}/${userStats.stamina.max}`}
-          />
-        }
+      <div className='stamina-div'>
+        <LinearProgress
+          className='stamina-bar'
+          variant='determinate'
+          color='primary'
+          value={(userStats.stamina.value / userStats.stamina.max) * 100}
+        />
+        <label className='stamina-text'>{`${userStats.stamina.value}/${userStats.stamina.max}`}</label>
       </div>
     </AppBar>
   );

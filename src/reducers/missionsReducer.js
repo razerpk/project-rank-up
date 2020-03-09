@@ -25,7 +25,7 @@ export const initializeMissions = missions => {
 export const updateMissionRewards = statName => {
   return async (dispatch, getState) => {
     let missions = getState().missions;
-    const statValue = getState().userStats[statName];
+    const statValue = getState().userStats.attributes[statName].value;
 
     for (let [mission, missionFields] of Object.entries(missions)) {
       const statMulti = missions[mission].rewardMultipliers[statName];
