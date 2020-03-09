@@ -18,17 +18,13 @@ module.exports = {
       "react"
   ],
   "rules": {
-      "indent": [
-          "error",
-          2
-      ],
       "quotes": [
           "error",
           "single"
       ],
       "semi": [
           "error",
-          "never"
+          "always"
       ],
       "eqeqeq": "error",
       "no-trailing-spaces": "error",

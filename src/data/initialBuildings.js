@@ -1,5 +1,5 @@
 const initialBuildings = {
-  'guild': {
+  guild: {
     description: 'Hire others to do chores',
     level: 0,
     cost: {
@@ -20,7 +20,8 @@ const initialBuildings = {
     level: 0,
     cost: {
       gold: 200,
-    }, costMulti: {
+    },
+    costMulti: {
       gold: 1.15,
     },
     lvUpMulti: 1.1,
@@ -30,7 +31,7 @@ const initialBuildings = {
       },
     },
   },
-  'Tavern': {
+  Tavern: {
     description: 'Place to buy some elixirs. Unlocks Perks',
     level: 0,
     cost: {
@@ -39,7 +40,7 @@ const initialBuildings = {
     },
     costMulti: {
       gold: 1.15,
-      silver:1.1,
+      silver: 1.1,
     },
     lvUpMulti: 1.1,
     produce: {
@@ -48,7 +49,7 @@ const initialBuildings = {
       },
     },
   },
-  'debug': {
+  debug: {
     level: 0,
     cost: {
       gold: 100,
@@ -63,6 +64,6 @@ const initialBuildings = {
       },
     },
   },
-}
+};
 
-export default initialBuildings
+export default initialBuildings;

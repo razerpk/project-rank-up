@@ -1,136 +1,136 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import { updateBuildingOnPurchase } from '../../reducers/buildingsReducer'
-import { subtractResources, updateResourcePerTick } from '../../reducers/resourcesReducer'
+import React from 'react';
+import { connect } from 'react-redux';
+import { updateBuildingOnPurchase } from '../../reducers/buildingsReducer';
 import {
-  Button,
-  Tooltip
-} from '@material-ui/core'
+  subtractResources,
+  updateResourcePerTick,
+} from '../../reducers/resourcesReducer';
+import { Button, Tooltip } from '@material-ui/core';
 
-const BuildingTable = (props) => {
-
+const BuildingTable = props => {
   if (!props.buildings || !props.resources) {
-    return null
+    return null;
   }
 
-  const handlePurchase = (buildingName) => {
-    const building = { ...props.buildings[buildingName] }
-    const cost = building.cost
+  const handlePurchase = buildingName => {
+    const building = { ...props.buildings[buildingName] };
+    const cost = building.cost;
 
     // Check if player can afford the building
     for (let [key] of Object.entries(cost)) {
       if (props.resources[key].curVal < cost[key]) {
-        console.log(`not enough ${key}`)
-        return
+        console.log(`not enough ${key}`);
+        return;
       }
     }
 
-    props.subtractResources(cost)
-    props.updateResourcePerTick(building.produce)
-    props.updateBuildingOnPurchase([buildingName], cost)
-  }
+    props.subtractResources(cost);
+    props.updateResourcePerTick(building.produce);
+    props.updateBuildingOnPurchase([buildingName], cost);
+  };
 
-  const showCost = (building) => {
-    return (
-      Object.entries(building.cost).map((resource) => {
-        return (
-          <div key={resource[0]}>
-            {resource[0]}: {resource[1]}
-          </div>
-        )
-      })
-    )
-  }
+  const showCost = building => {
+    return Object.entries(building.cost).map(resource => {
+      return (
+        <div key={resource[0]}>
+          {resource[0]}: {resource[1]}
+        </div>
+      );
+    });
+  };
   const showProduce = (building, buildingLevel) => {
-    return (
-      Object.entries(building.produce).map((resource) => {
-        return (
-          <div key={resource[0]}>
-            {resource[0]}: {Math.round((resource[1].baseValue * (buildingLevel)) * 10) / 10} /s
-          </div>
-        )
-      })
-    )
-  }
+    return Object.entries(building.produce).map(resource => {
+      return (
+        <div key={resource[0]}>
+          {resource[0]}:{' '}
+          {Math.round(resource[1].baseValue * buildingLevel * 10) / 10} /s
+        </div>
+      );
+    });
+  };
 
   //returns: green if can afford the building
   //         red if cant afford the building
-  const buttonColor = (building) => {
+  const buttonColor = building => {
     for (let [key] of Object.entries(building.cost)) {
       if (building.cost[key] > props.resources[key].curVal) {
-        return '#CA3433' //red
+        return '#CA3433'; //red
       }
     }
-    return '#98FB98' //green
-  }
+    return '#98FB98'; //green
+  };
 
   /* building[0] is building name, building[1] contains one of the buildings properties*/
-  const buildingRows =
-    Object.entries(props.buildings).map(building => {
-      return (
-        <div className='' key={building[0]}>
+  const buildingRows = Object.entries(props.buildings).map(building => {
+    return (
+      <div className='' key={building[0]}>
+        <div className=''>
           <div className=''>
-            <div className=''>
-              <div><b>{building[0]}</b></div>
-              <hr></hr>
-              <div>{showProduce(building[1], building[1].level)}</div>
+            <div>
+              <b>{building[0]}</b>
             </div>
-            <div className=''>
-              {/* Popup contains all building info on hover */}
-            </div>
-            <Tooltip
-              title={<>
-                <h2>
-                  {building[0]}
-                </h2>
-                <p>
-                  {building[1].description}
-                </p>
+            <hr></hr>
+            <div>{showProduce(building[1], building[1].level)}</div>
+          </div>
+          <div className=''>
+            {/* Popup contains all building info on hover */}
+          </div>
+          <Tooltip
+            title={
+              <>
+                <h2>{building[0]}</h2>
+                <p>{building[1].description}</p>
                 <div>
-                    Current level {building[1].level}<br />
-                    next level production: {showProduce(building[1], building[1].level + 1)}
+                  Current level {building[1].level}
+                  <br />
+                  next level production:{' '}
+                  {showProduce(building[1], building[1].level + 1)}
                 </div>
               </>
-              }
+            }
+          >
+            <Button
+              style={{ background: buttonColor(building[1]) }}
+              onClick={() => handlePurchase(building[0])}
             >
-              <Button style={{ background: buttonColor(building[1]) }}
-                onClick={() => handlePurchase(building[0])}>Buy</Button>
-            </Tooltip>
+              Buy
+            </Button>
+          </Tooltip>
 
-            <div>
-              {showCost(building[1], building[1].level)}
-            </div>
-          </div>
+          <div>{showCost(building[1], building[1].level)}</div>
         </div>
-      )
-    })
+      </div>
+    );
+  });
 
   return (
     <div>
       <div>
-        <div><b>Buildings</b></div>
+        <div>
+          <b>Buildings</b>
+        </div>
       </div>
 
       {buildingRows}
     </div>
-  )
-}
+  );
+};
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     resources: state.resources,
     buildings: state.buildings,
-  }
-}
+  };
+};
 const mapDispatchToProps = {
   subtractResources,
   updateResourcePerTick,
   updateBuildingOnPurchase,
-}
+};
 
 const ConnectedBuildingTable = connect(
   mapStateToProps,
   mapDispatchToProps
-)(BuildingTable)
+)(BuildingTable);
 
-export default ConnectedBuildingTable
+export default ConnectedBuildingTable;

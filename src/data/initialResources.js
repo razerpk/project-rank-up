@@ -11,6 +11,6 @@ const initialResources = {
     curVal: 0,
     perTick: 0,
   },
-}
+};
 
-export default initialResources
+export default initialResources;

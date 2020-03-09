@@ -1,30 +1,38 @@
-import React, { useState, /*useEffect*/ } from 'react'
-import useInterval from './hooks/useInterval'
-import TopMenu from './components/topMenu/TopMenu'
-import ContentTabs from './components/contentTabs/ContentTabs'
-import ResourcesList from './components/resourcesList/ResourcesList'
-import { connect } from 'react-redux'
-import { updateStamina } from './reducers/userStatsReducer'
-import { updateResources } from './reducers/resourcesReducer'
-import { initializeBuildings } from './reducers/buildingsReducer'
+import React, { useState /*useEffect*/ } from 'react';
+import useInterval from './hooks/useInterval';
+import TopMenu from './components/topMenu/TopMenu';
+import ContentTabs from './components/contentTabs/ContentTabs';
+import ResourcesList from './components/resourcesList/ResourcesList';
+import { connect } from 'react-redux';
+import { updateStamina } from './reducers/userStatsReducer';
+import { updateResources } from './reducers/resourcesReducer';
+import { initializeBuildings } from './reducers/buildingsReducer';
 import {
   Paper,
   //Progress,
-} from '@material-ui/core'
-import './App.scss'
+} from '@material-ui/core';
+import './App.scss';
 
-const App = (props) => {
-  const [seconds, setSeconds] = useState(0)
+const App = props => {
+  const [seconds, setSeconds] = useState(0);
+  const {
+    resources,
+    userStats,
+    buildings,
+    updateResources,
+    //initializeBuildings,
+    updateStamina,
+  } = props;
 
   // Main game loop
   useInterval(() => {
-    setSeconds(seconds + 1)
+    setSeconds(seconds + 1);
     // Your custom logic here
-    if (props.userStats.stamina.value < props.userStats.stamina.max) {
-      props.updateStamina()
+    if (userStats.stamina.value < userStats.stamina.max) {
+      updateStamina();
     }
-    props.updateResources()
-  }, 1000)
+    updateResources();
+  }, 1000);
 
   // fetch saved gamedata on page load
   /*useEffect(() => {
@@ -57,21 +65,25 @@ const App = (props) => {
   */
 
   const saveData = () => {
-    const resources = props.userStats
-    const userStats = props.resources
-    const buildings = props.buildings
-    window.localStorage.setItem('gameData', JSON.stringify({
-      userStats,
-      resources,
-      buildings
-    }))
-  }
+    window.localStorage.setItem(
+      'gameData',
+      JSON.stringify({
+        userStats,
+        resources,
+        buildings,
+      })
+    );
+  };
 
   return (
     <>
       <div className='body'>
         <Paper className='main-paper'>
-          <TopMenu saveData={saveData} seconds={seconds} />
+          <TopMenu
+            saveData={saveData}
+            seconds={seconds}
+            userStats={userStats}
+          />
           <div className='main-view-row'>
             <div className='main-view-item'>
               <ResourcesList />
@@ -83,22 +95,22 @@ const App = (props) => {
               </div>
             </div>
           </div>
-
         </Paper>
       </div>
     </>
-  )
-}
-
+  );
+};
 
 const mapStateToProps = state => {
   return {
     userStats: state.userStats,
     resources: state.resources,
     buildings: state.buildings,
-  }
-}
+  };
+};
 
-export default connect(
-  mapStateToProps, { updateResources, initializeBuildings, updateStamina }
-)(App)
+export default connect(mapStateToProps, {
+  updateResources,
+  initializeBuildings,
+  updateStamina,
+})(App);

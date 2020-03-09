@@ -1,35 +1,38 @@
-import initialMissions from '../data/initialMissions'
+import initialMissions from '../data/initialMissions';
 
 const reducer = (state = initialMissions, action) => {
   switch (action.type) {
-  case 'INIT_MISSIONS':
-    return action.data
-  case 'UPDATE_MISSIONS':
-    return action.data
-  case 'UPDATE_MISSION_REWARDS':
-    return action.data
-  default: return state
+    case 'INIT_MISSIONS':
+      return action.data;
+    case 'UPDATE_MISSIONS':
+      return action.data;
+    case 'UPDATE_MISSION_REWARDS':
+      return action.data;
+    default:
+      return state;
   }
-}
+};
 
-export const initializeMissions = (missions) => {
+export const initializeMissions = missions => {
   return async dispatch => {
     dispatch({
       type: 'INIT_MISSIONS',
-      data: missions
-    })
-  }
-}
+      data: missions,
+    });
+  };
+};
 
-export const updateMissionRewards = (statName) => {
+export const updateMissionRewards = statName => {
   return async (dispatch, getState) => {
-    let missions = getState().missions
-    const statValue = getState().userStats[statName]
+    let missions = getState().missions;
+    const statValue = getState().userStats[statName];
 
     for (let [mission, missionFields] of Object.entries(missions)) {
-      const statMulti = missions[mission].rewardMultipliers[statName]
+      const statMulti = missions[mission].rewardMultipliers[statName];
 
-      for (let [resource, resourceFields] of Object.entries(missionFields.rewards)) {
+      for (let [resource, resourceFields] of Object.entries(
+        missionFields.rewards
+      )) {
         missions = {
           ...missions,
           [mission]: {
@@ -38,28 +41,31 @@ export const updateMissionRewards = (statName) => {
               ...missions[mission].rewards,
               [resource]: {
                 ...resourceFields,
-                value: Math.round(resourceFields.baseValue * statMulti ** statValue * 10) /10
-              }
-            }
-          }
-        }
+                value:
+                  Math.round(
+                    resourceFields.baseValue * statMulti ** statValue * 10
+                  ) / 10,
+              },
+            },
+          },
+        };
       }
     }
 
     dispatch({
       type: 'UPDATE_MISSION_REWARDS',
-      data: missions
-    })
-  }
-}
+      data: missions,
+    });
+  };
+};
 
-export const updateMissions = (missions) => {
+export const updateMissions = missions => {
   return async dispatch => {
     dispatch({
       type: 'UPDATE_MISSIONS',
-      data: missions
-    })
-  }
-}
+      data: missions,
+    });
+  };
+};
 
-export default reducer
+export default reducer;

@@ -1,37 +1,37 @@
-import initialUserStats from '../data/initialStats'
+import initialUserStats from '../data/initialStats';
 
 const reducer = (state = initialUserStats, action) => {
   switch (action.type) {
-  case 'INIT_USER_STATS':
-    return action.data
-  case 'ADD_XP':
-    return action.data
-  case 'ADD_STAT':
-    return action.data
-  case 'SPEND_UNUSED_ATTRIBUTE_POINT':
-    return action.data
-  case 'UPDATE_STAMINA':
-    return {
-      ...state,
-      stamina: action.data,
-    }
-  default: return state
+    case 'INIT_USER_STATS':
+      return action.data;
+    case 'ADD_XP':
+      return action.data;
+    case 'ADD_STAT':
+      return action.data;
+    case 'SPEND_UNUSED_ATTRIBUTE_POINT':
+      return action.data;
+    case 'UPDATE_STAMINA':
+      return {
+        ...state,
+        stamina: action.data,
+      };
+    default:
+      return state;
   }
-}
+};
 
-export const initializeUserStats = (userStats) => {
+export const initializeUserStats = userStats => {
   return async dispatch => {
     dispatch({
       type: 'INIT_USER_STATS',
-      data: userStats // TODO
-    })
-  }
-}
+      data: userStats, // TODO
+    });
+  };
+};
 
-export const missionXpAndStamina = (mission) => {
+export const missionXpAndStamina = mission => {
   return async (dispatch, getState) => {
-
-    let stats = getState().userStats
+    let stats = getState().userStats;
 
     stats = {
       ...stats,
@@ -40,7 +40,7 @@ export const missionXpAndStamina = (mission) => {
         value: Math.round((stats.stamina.value - mission.stamCost) * 10) / 10,
       },
       xp: Math.round((stats.xp + mission.rewards.xp.value) * 10) / 10,
-    }
+    };
 
     // increase level while enough xp
     while (stats.xp >= stats.xpToLevel) {
@@ -49,66 +49,72 @@ export const missionXpAndStamina = (mission) => {
         level: stats.level + 1,
         unusedAttrPoints: stats.unusedAttrPoints + stats.attrPointsPerLevel,
         xp: Math.round((stats.xp - stats.xpToLevel) * 10) / 10,
-        xpToLevel: Math.round(stats.xpToLevel * stats.lvUpMulti)
-      }
+        xpToLevel: Math.round(stats.xpToLevel * stats.lvUpMulti),
+      };
     }
 
     dispatch({
       type: 'ADD_XP',
-      data: stats
-    })
-  }
-}
+      data: stats,
+    });
+  };
+};
 
-export const addStat = (statName, value=1) => {
+export const addStat = (statName, value = 1) => {
   return async (dispatch, getState) => {
-    let userStats = getState().userStats
+    let userStats = getState().userStats;
+    let updatedAttributes = { ...userStats.attributes };
+    updatedAttributes[statName].value += value;
 
     userStats = {
       ...userStats,
-      [statName]: userStats[statName] + value,
-    }
+      attributes: updatedAttributes,
+    };
 
     dispatch({
       type: 'ADD_STAT',
-      data: userStats
-    })
-  }
-}
+      data: userStats,
+    });
+  };
+};
 
-export const spendUnusedAttributePoint= (attribute) => {
+export const spendUnusedAttributePoint = attribute => {
   return async (dispatch, getState) => {
-    let userStats = getState().userStats
+    let userStats = getState().userStats;
+    let updatedAttributes = userStats.attributes;
+    updatedAttributes[attribute].value += 1;
 
-    console.log('attribute :', attribute)
     userStats = {
       ...userStats,
-      [attribute]: userStats[attribute] + 1,
+      attributes: updatedAttributes,
       unusedAttrPoints: userStats.unusedAttrPoints - 1,
-    }
+    };
 
     dispatch({
       type: 'SPEND_UNUSED_ATTRIBUTE_POINT',
-      data: userStats
-    })
-  }
-}
+      data: userStats,
+    });
+  };
+};
 
 export const updateStamina = () => {
   return async (dispatch, getState) => {
-    let updatedStamina = getState().userStats.stamina
-    const maxStamina = getState().userStats.stamina.max
+    let updatedStamina = getState().userStats.stamina;
+    const maxStamina = getState().userStats.stamina.max;
 
     updatedStamina = {
       ...updatedStamina,
-      value: Math.min(maxStamina, updatedStamina.value + updatedStamina.perTick)
-    }
+      value: Math.min(
+        maxStamina,
+        updatedStamina.value + updatedStamina.perTick
+      ),
+    };
 
     dispatch({
       type: 'UPDATE_STAMINA',
-      data: updatedStamina
-    })
-  }
-}
+      data: updatedStamina,
+    });
+  };
+};
 
-export default reducer
+export default reducer;
