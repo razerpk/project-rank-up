@@ -20,6 +20,5 @@
 
 
 Goal:
-Start as normal citizen, try to get to S power rank / XX level.
-Level / Power rank aukaisee tehtäviä mistä saa enemmän xp,   
-aukaisee uusia "rakennuksia".   
+Start as normal citizen, try to get to S power rank / XX level.  
+Level and power rank opens new missions which give more xp and unlock new 'buildings'  
