@@ -1,11 +1,11 @@
-export interface Buildings {
+export type Buildings = {
   guild: Guild;
   'Silver mine': SilverMine;
   tavern: Tavern;
   debug: Debug;
 }
 
-export interface Guild {
+export type Guild = {
   description: string;
   level: number;
   cost: { gold: number };
@@ -14,7 +14,7 @@ export interface Guild {
   produce: { gold: { baseValue: number } };
 }
 
-export interface SilverMine {
+export type SilverMine = {
   description: string;
   level: number;
   cost: {
@@ -31,7 +31,7 @@ export interface SilverMine {
   };
 }
 
-export interface Tavern {
+export type Tavern = {
   description: string;
   level: number;
   cost: {
@@ -50,7 +50,7 @@ export interface Tavern {
   },
 }
 
-export interface Debug {
+export type Debug = {
   level: number,
   cost: {
     gold: number,
