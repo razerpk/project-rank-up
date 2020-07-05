@@ -1,4 +1,76 @@
-const initialMissions = {
+export type Missions = {
+  'Collect bottles': {
+    description: string,
+    lvReq: number,
+    prReq: number,
+    stamCost: number,
+    rewardMultipliers: {
+      con: number,
+      str: number,
+      dex: number,
+      int: number,
+      wil: number,
+    },
+    rewards: {
+      gold: {
+        baseValue: number,
+        value: number,
+      },
+      xp: {
+        baseValue: number,
+        value: number,
+      },
+    },
+  },
+  'Help citizens': {
+    description: string,
+    lvReq: number,
+    prReq: number,
+    stamCost: number,
+    rewardMultipliers: {
+      con: number,
+      str: number,
+      dex: number,
+      int: number,
+      wil: number,
+    },
+    rewards: {
+      gold: {
+        baseValue: number,
+        value: number,
+      },
+      xp: {
+        baseValue: number,
+        value: number,
+      },
+    },
+  },
+  Exercise: {
+    description: string,
+    lvReq: number,
+    prReq: number,
+    stamCost: number,
+    rewardMultipliers: {
+      con: number,
+      str: number,
+      dex: number,
+      int: number,
+      wil: number,
+    },
+    rewards: {
+      gold: {
+        baseValue: number,
+        value: number,
+      },
+      xp: {
+        baseValue: number,
+        value: number,
+      },
+    },
+  },
+}
+
+export const initialMissions = {
   'Collect bottles': {
     description:
       'Collect bottles from the streets and trash for some pocket money.',
@@ -71,5 +143,3 @@ const initialMissions = {
     },
   },
 };
-
-export default initialMissions;

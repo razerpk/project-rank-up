@@ -1,4 +1,19 @@
-const initialResources = {
+export type Resources = {
+  gold: {
+    curVal: number,
+    perTick: number,
+  },
+  silver: {
+    curVal: number,
+    perTick: number,
+  },
+  elixir: {
+    curVal: number,
+    perTick: number,
+  },
+}
+
+export const initialResources: Resources = {
   gold: {
     curVal: 10000,
     perTick: 0,
@@ -12,5 +27,3 @@ const initialResources = {
     perTick: 0,
   },
 };
-
-export default initialResources;

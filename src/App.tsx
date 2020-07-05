@@ -1,21 +1,24 @@
-import React, { useState /*useEffect*/ } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useContext
+} from 'react';
 import useInterval from './hooks/useInterval';
-import { initialBuildings, Buildings } from './data/initialBuildings';
-import initialMissions from './data/initialMissions';
-import initialResources from './data/initialResources';
-import initialStats from './data/initialStats';
+import { BuildingsContext } from './stores/BuildingsProvider'
+import { ResourcesContext } from './stores/ResourcesProvider'
 //import './App.scss';
 
-const App = () => {
+const App = (props: any) => {
   const [seconds, setSeconds] = useState(0);
-  const [resources, setResources] = useState(initialResources);
-  const [missions, setMissions] = useState(initialMissions);
-  const [buildings, setBuildings] = useState<Buildings>(initialBuildings);
-  const [stats, setUserStats] = useState(initialStats);
 
+  const { buildings, setBuildings } = useContext(BuildingsContext);
+  const { resources, setResources } = useContext(ResourcesContext);
 
+  console.log('buildings :>> ', buildings);
   // Main game loop
   useInterval(() => {
+
+    setResources({ ...resources, gold: { ...resources.gold, curVal: resources.gold.curVal + 1 } })
     setSeconds(seconds + 1);
     // Your custom logic here
     if (false) {
@@ -58,9 +61,9 @@ const App = () => {
     window.localStorage.setItem(
       'gameData',
       JSON.stringify({
-        stats,
-        resources,
-        buildings,
+        //stats,
+        //resources,
+        //buildings,
       })
     );
   };
@@ -68,7 +71,8 @@ const App = () => {
   return (
     <div>
       <div className='body'>
-        HELLO
+        <div>Workign as intended</div>
+        {resources.gold.curVal}
       </div>
     </div>
   );

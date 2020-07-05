@@ -1,4 +1,25 @@
-const initialUserStats = {
+export type UserStats = {
+  attributes: {
+    con: { value: number },
+    str: { value: number },
+    dex: { value: number },
+    int: { value: number },
+    wil: { value: number },
+  },
+  stamina: {
+    value: number,
+    max: number,
+    perTick: number,
+  },
+  level: number,
+  lvUpMulti: number,
+  unusedAttrPoints: number,
+  attrPointsPerLevel: number,
+  xp: number,
+  xpToLevel: number,
+}
+
+export const initialUserStats: UserStats = {
   attributes: {
     con: { value: 1 },
     str: { value: 1 },
@@ -18,5 +39,3 @@ const initialUserStats = {
   xp: 0,
   xpToLevel: 100,
 };
-
-export default initialUserStats;
